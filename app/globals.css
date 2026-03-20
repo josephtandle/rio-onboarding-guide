@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-rio-black: #011D19;
+  --color-rio-teal: #0A5F52;
+  --color-rio-green: #38604C;
+  --color-rio-mint: #C9F2D9;
+  --color-rio-aqua: #3ED4C1;
+  --color-rio-sand: #E8DCC2;
+  --color-rio-beige: #FFFEFC;
+  --color-rio-white: #FFFFFF;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-rio-beige);
+  color: var(--color-rio-black);
+  font-family: var(--font-sans);
+}
+
+/* Custom checkbox styling */
+input[type="checkbox"] {
+  accent-color: var(--color-rio-teal);
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+}
+
+/* Link color override */
+a {
+  color: var(--color-rio-teal);
+}
+
+a:hover {
+  text-decoration: underline;
+}
