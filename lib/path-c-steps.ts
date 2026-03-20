@@ -7,6 +7,7 @@ export const pathCSteps: StepData[] = [
     title: "Quick Check",
     estimatedTime: "1 min",
     actions: [
+      { label: "Your OTP verification was completed on this number" },
       { label: 'Your number shows "Connected" or green status in Meta Business Manager' },
       { label: "No other provider is listed under Business Settings > Partners" },
     ],
