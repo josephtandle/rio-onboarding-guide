@@ -11,11 +11,10 @@ export default function Header() {
           <Image
             src="/rio-logo.png"
             alt="Rio"
-            width={36}
-            height={36}
-            className="rounded"
+            width={120}
+            height={40}
+            className="object-contain"
           />
-          <span className="text-lg font-semibold text-rio-black">Rio</span>
         </Link>
         <span className="text-sm text-rio-green">Setup Guide</span>
       </div>

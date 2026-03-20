@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { StepData } from "@/lib/types";
 import { loadState, saveState } from "@/lib/storage";
 import Header from "./Header";
@@ -11,6 +12,7 @@ import SupportWidget from "./SupportWidget";
 interface PathPageProps {
   pathId: string;
   pathTitle: string;
+  screenIdPrefix: string; // e.g. "A", "B", "C", "D"
   steps: StepData[];
   prerequisiteNode?: React.ReactNode;
 }
@@ -18,9 +20,11 @@ interface PathPageProps {
 export default function PathPage({
   pathId,
   pathTitle,
+  screenIdPrefix,
   steps,
   prerequisiteNode,
 }: PathPageProps) {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
   const [checkedActions, setCheckedActions] = useState<
@@ -76,6 +80,21 @@ export default function PathPage({
 
   const visibleSteps = steps.filter((s) => !hiddenSteps.includes(s.id));
 
+  function handleBack() {
+    const prevIndex = Math.max(currentIndex - 1, 0);
+    setCurrentIndex(prevIndex);
+    persist(prevIndex, completedSteps, checkedActions);
+    if (typeof window !== "undefined") {
+      const prevStep = visibleSteps[prevIndex];
+      if (prevStep) {
+        window.history.replaceState(null, "", `#step-${prevStep.number}`);
+        document
+          .getElementById(`step-${prevStep.number}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }
+
   function handleComplete(stepId: string) {
     const next = [...completedSteps, stepId];
     setCompletedSteps(next);
@@ -123,6 +142,15 @@ export default function PathPage({
 
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
         <div className="mb-6">
+          {prereqDone && (
+            <button
+              onClick={currentIndex === 0 ? () => router.push("/") : handleBack}
+              className="mb-3 flex items-center gap-1 text-sm text-rio-green hover:underline"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
+              {currentIndex === 0 ? "Back to questions" : "Back"}
+            </button>
+          )}
           <h1 className="text-2xl font-bold text-rio-black">{pathTitle}</h1>
           <p className="mt-1 text-sm text-rio-green">
             Step {Math.min(currentIndex + 1, visibleSteps.length)} of{" "}
@@ -151,6 +179,11 @@ export default function PathPage({
         {/* Steps */}
         {(prereqDone || !prerequisiteNode) && (
           <div className="space-y-4">
+            {prereqDone && currentIndex === 0 && (
+              <div className="mb-4 rounded-lg bg-rio-mint/30 px-4 py-3 text-sm text-rio-black">
+                Based on your answers, here&apos;s your step-by-step checklist.
+              </div>
+            )}
             {visibleSteps.map((step, i) => (
               <StepCard
                 key={step.id}
@@ -164,6 +197,7 @@ export default function PathPage({
                 onComplete={() => handleComplete(step.id)}
                 onBranch={(action) => handleBranch(step.id, action)}
                 totalSteps={visibleSteps.length}
+                screenId={`${screenIdPrefix}-${step.number}`}
               />
             ))}
           </div>

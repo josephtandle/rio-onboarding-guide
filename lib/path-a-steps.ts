@@ -85,7 +85,7 @@ export const pathASteps: StepData[] = [
     title: "Start the Connection in Rio",
     estimatedTime: "1 min",
     actions: [
-      { label: 'In Rio, click "Connect WhatsApp" (on your dashboard or onboarding screen)' },
+      { label: 'Log in to Rio and click "Connect WhatsApp"', href: "https://www.joinrio.app/login" },
       { label: "A popup window from Facebook will appear. Do not close it or block it." },
       { label: "If no popup appears: check that your browser is not blocking popups for Rio" },
     ],

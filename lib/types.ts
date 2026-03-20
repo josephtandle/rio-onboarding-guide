@@ -1,5 +1,6 @@
 export interface StepAction {
   label: string;
+  href?: string; // optional link for the action label
 }
 
 export interface CommonError {

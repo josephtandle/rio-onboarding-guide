@@ -38,6 +38,7 @@ export default function PathAPage() {
     <PathPage
       pathId="path-a"
       pathTitle="Fresh Setup"
+      screenIdPrefix="A"
       steps={pathASteps}
     />
   );

@@ -19,6 +19,9 @@ export default function Home() {
           </p>
         </div>
 
+        <p className="mb-6 text-center text-sm text-rio-green">
+          Answer a few quick questions and we&apos;ll show you exactly what to do.
+        </p>
         <TriageQuiz />
       </main>
 

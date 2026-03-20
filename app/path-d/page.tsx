@@ -77,6 +77,7 @@ function PathDInner({
 // Custom PathPage that intercepts provider branch actions
 import { useState as useStateAlias, useCallback, useEffect } from "react";
 import Link from "next/link";
+import { useRouter as useRouterAlias } from "next/navigation";
 import { loadState, saveState } from "@/lib/storage";
 import Header from "@/components/Header";
 import StepCard from "@/components/StepCard";
@@ -96,6 +97,7 @@ function PathPageWithBranch({
   provider: Provider;
   onProviderSelect: (p: Provider) => void;
 }) {
+  const router = useRouterAlias();
   const [currentIndex, setCurrentIndex] = useStateAlias(0);
   const [completedSteps, setCompletedSteps] = useStateAlias<string[]>([]);
   const [checkedActions, setCheckedActions] = useStateAlias<
@@ -159,6 +161,21 @@ function PathPageWithBranch({
       <Header />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
         <div className="mb-6">
+          <button
+            onClick={() => {
+              if (currentIndex === 0) {
+                router.push("/");
+              } else {
+                const prev = Math.max(currentIndex - 1, 0);
+                setCurrentIndex(prev);
+                persist(prev, completedSteps, checkedActions);
+              }
+            }}
+            className="mb-3 flex items-center gap-1 text-sm text-rio-green hover:underline"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
+            {currentIndex === 0 ? "Back to questions" : "Back"}
+          </button>
           <h1 className="text-2xl font-bold text-rio-black">{pathTitle}</h1>
           <p className="mt-1 text-sm text-rio-green">
             Step {Math.min(currentIndex + 1, steps.length)} of {steps.length}
@@ -188,6 +205,7 @@ function PathPageWithBranch({
               onComplete={() => handleComplete(step.id)}
               onBranch={(action) => handleBranch(step.id, action)}
               totalSteps={steps.length}
+              screenId={`D-${step.number}`}
             />
           ))}
         </div>

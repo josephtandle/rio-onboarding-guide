@@ -15,6 +15,7 @@ interface StepCardProps {
   onComplete: () => void;
   onBranch?: (action: string) => void;
   totalSteps: number;
+  screenId?: string; // e.g. "A-1", "B-3"
 }
 
 export default function StepCard({
@@ -26,6 +27,7 @@ export default function StepCard({
   onComplete,
   onBranch,
   totalSteps,
+  screenId,
 }: StepCardProps) {
   const [showTellMeMore, setShowTellMeMore] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
@@ -35,24 +37,18 @@ export default function StepCard({
     checkedActions.length === step.actions.length &&
     checkedActions.every(Boolean);
 
-  // Collapsed completed card
+  // Collapsed completed card (non-clickable)
   if (isCompleted && !isActive) {
     return (
       <div className="rounded-xl border border-rio-mint bg-rio-white p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-rio-aqua text-white">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-            >
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rio-aqua text-white">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
           <span className="text-sm font-medium text-rio-green">
+            {screenId && <span className="mr-2 font-mono text-xs text-gray-400">[{screenId}]</span>}
             Step {step.number} of {totalSteps}: {step.title}
           </span>
         </div>
@@ -69,6 +65,7 @@ export default function StepCard({
             {step.number}
           </div>
           <span className="text-sm text-gray-400">
+            {screenId && <span className="mr-1 font-mono text-xs text-gray-300">[{screenId}]</span>}
             Step {step.number} of {totalSteps}: {step.title}
           </span>
           <span className="ml-auto rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-400">
@@ -84,21 +81,30 @@ export default function StepCard({
     <>
       <div
         id={`step-${step.number}`}
-        className="rounded-xl border-2 border-rio-teal bg-rio-white p-5 shadow-sm"
+        className="rounded-xl bg-rio-white p-5 border-2 border-rio-teal shadow-sm"
       >
         {/* Header */}
         <div className="mb-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-rio-teal text-xs font-semibold text-white">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white bg-rio-teal">
               {step.number}
             </div>
-            <h3 className="text-base font-semibold text-rio-black">
-              Step {step.number} of {totalSteps}: {step.title}
-            </h3>
+            <div>
+              {screenId && (
+                <span className="block font-mono text-xs text-gray-400">[{screenId}]</span>
+              )}
+              <h3 className="text-base font-semibold text-rio-black">
+                Step {step.number} of {totalSteps}: {step.title}
+              </h3>
+            </div>
           </div>
-          <span className="shrink-0 rounded-full bg-rio-mint px-2.5 py-0.5 text-xs font-medium text-rio-teal">
-            {step.estimatedTime}
-          </span>
+          <div className="flex shrink-0 items-center gap-2">
+            {step.estimatedTime && (
+              <span className="rounded-full bg-rio-mint px-2.5 py-0.5 text-xs font-medium text-rio-teal">
+                {step.estimatedTime}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Success state (final step) */}
@@ -152,7 +158,23 @@ export default function StepCard({
                   onChange={() => onToggleAction(i)}
                   className="mt-0.5"
                 />
-                <span className="text-sm text-rio-black">{action.label}</span>
+                <span className="text-sm text-rio-black">
+                  {action.href ? (
+                    <>
+                      <a
+                        href={action.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-rio-teal underline hover:opacity-80"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {action.label}
+                      </a>
+                    </>
+                  ) : (
+                    action.label
+                  )}
+                </span>
               </label>
             ))}
           </div>

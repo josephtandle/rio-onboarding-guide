@@ -8,7 +8,7 @@ export const pathBSteps: StepData[] = [
     estimatedTime: "2 min",
     actions: [
       { label: "Go to business.facebook.com" },
-      { label: "Click Business Settings, then Accounts, then WhatsApp Accounts" },
+      { label: "Click the Settings gear (top left) → Accounts → WhatsApp Accounts" },
       { label: "Find your number in the list" },
     ],
     screenshotPlaceholder:
@@ -20,7 +20,7 @@ export const pathBSteps: StepData[] = [
     title: "Start the Connection in Rio",
     estimatedTime: "2 min",
     actions: [
-      { label: 'Click "Connect WhatsApp" in Rio' },
+      { label: 'Log in to Rio and click "Connect WhatsApp"', href: "https://www.joinrio.app/login" },
       { label: "Log in with Facebook in the popup" },
       { label: "Select your existing business account (do not create a new one)" },
       { label: "Select your existing WhatsApp Business Account (do not create a new one)" },

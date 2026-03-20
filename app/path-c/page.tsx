@@ -8,6 +8,7 @@ export default function PathCPage() {
     <PathPage
       pathId="path-c"
       pathTitle="Ready to Connect"
+      screenIdPrefix="C"
       steps={pathCSteps}
     />
   );

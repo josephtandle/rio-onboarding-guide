@@ -27,11 +27,13 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-/* Link color override */
-a {
-  color: var(--color-rio-teal);
-}
+/* Link color override — in @layer base so Tailwind utilities can override it */
+@layer base {
+  a {
+    color: var(--color-rio-teal);
+  }
 
-a:hover {
-  text-decoration: underline;
+  a:hover {
+    text-decoration: underline;
+  }
 }
