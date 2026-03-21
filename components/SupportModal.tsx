@@ -19,7 +19,7 @@ export default function SupportModal({ open, onClose }: SupportModalProps) {
         </p>
         <div className="flex flex-col gap-3">
           <a
-            href="https://wa.me/placeholder"
+            href="https://wa.me/16462092333"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white no-underline hover:opacity-90"
