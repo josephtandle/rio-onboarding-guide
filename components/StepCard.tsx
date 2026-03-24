@@ -32,9 +32,10 @@ export default function StepCard({
   const [showTellMeMore, setShowTellMeMore] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
 
+  const actions = step.actions ?? [];
   const allChecked =
-    step.actions.length > 0 &&
-    checkedActions.length === step.actions.length &&
+    actions.length > 0 &&
+    checkedActions.length === actions.length &&
     checkedActions.every(Boolean);
 
   // Collapsed completed card (non-clickable)
@@ -145,9 +146,9 @@ export default function StepCard({
         )}
 
         {/* Actions as checkboxes */}
-        {step.actions.length > 0 && (
+        {actions.length > 0 && (
           <div className="mb-4 space-y-3">
-            {step.actions.map((action, i) => (
+            {actions.map((action, i) => (
               <label
                 key={i}
                 className="flex cursor-pointer items-start gap-3 rounded-lg p-2 hover:bg-rio-beige"
