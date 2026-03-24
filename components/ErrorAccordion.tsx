@@ -67,7 +67,41 @@ export default function ErrorAccordion({ errors }: ErrorAccordionProps) {
                 </div>
               )}
 
-              {/* Dead-end note */}
+              {/* Fix steps */}
+              {err.fixSteps && err.fixSteps.length > 0 && (
+                <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3">
+                  <p className="mb-2 text-xs font-semibold text-blue-800">How to fix this:</p>
+                  <ol className="space-y-1.5">
+                    {err.fixSteps.map((step, j) => (
+                      <li key={j} className="flex gap-2 text-xs text-blue-900">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blue-200 font-bold text-blue-800">
+                          {j + 1}
+                        </span>
+                        {step.href ? (
+                          <a href={step.href} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80">
+                            {step.label}
+                          </a>
+                        ) : (
+                          <span>{step.label}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                  {err.fixScreenshotSrc && (
+                    <div className="mt-3 overflow-hidden rounded-lg border border-blue-200">
+                      <Image
+                        src={err.fixScreenshotSrc}
+                        alt="How to fix this issue"
+                        width={500}
+                        height={300}
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Dead-end note (placeholder while fix is being researched) */}
               {err.deadEndNote && (
                 <p className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs italic text-amber-700">
                   {err.deadEndNote}
@@ -82,7 +116,7 @@ export default function ErrorAccordion({ errors }: ErrorAccordionProps) {
                     <line x1="15" y1="9" x2="9" y2="15" />
                     <line x1="9" y1="9" x2="15" y2="15" />
                   </svg>
-                  This path ends here. Fix the issue above, then start again from the beginning.
+                  Fix the issue above, then return and try again.
                 </div>
               )}
             </div>

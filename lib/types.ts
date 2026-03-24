@@ -6,10 +6,12 @@ export interface StepAction {
 export interface CommonError {
   title: string;
   description: string;
-  branchId?: string;      // e.g. "B6.I"
-  screenshotSrc?: string;
+  branchId?: string;           // e.g. "B6.I"
+  screenshotSrc?: string;      // screenshot of the error
   isDeadEnd?: boolean;
-  deadEndNote?: string;
+  deadEndNote?: string;        // placeholder text while fix is being researched
+  fixSteps?: { label: string; href?: string }[]; // step-by-step fix instructions
+  fixScreenshotSrc?: string;   // screenshot showing the fix
 }
 
 export interface StepData {
