@@ -107,6 +107,40 @@ export default function ErrorAccordion({ errors }: ErrorAccordionProps) {
                 </div>
               )}
 
+              {/* Sub-fix (nested blocker within the main fix) */}
+              {err.subFix && (
+                <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
+                  <p className="mb-2 text-xs font-semibold text-gray-700">{err.subFix.trigger}</p>
+                  <ol className="space-y-1.5">
+                    {err.subFix.steps.map((step, j) => (
+                      <li key={j} className="flex gap-2 text-xs text-gray-800">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-gray-200 font-bold text-gray-600">
+                          {j + 1}
+                        </span>
+                        {step.href ? (
+                          <a href={step.href} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80">
+                            {step.label}
+                          </a>
+                        ) : (
+                          <span>{step.label}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                  {err.subFix.screenshotSrc && (
+                    <div className="mt-3 overflow-hidden rounded-lg border border-gray-200">
+                      <Image
+                        src={err.subFix.screenshotSrc}
+                        alt={err.subFix.trigger}
+                        width={500}
+                        height={300}
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Dead-end note (placeholder while fix is being researched) */}
               {err.deadEndNote && (
                 <p className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs italic text-amber-700">

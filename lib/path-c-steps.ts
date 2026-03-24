@@ -33,7 +33,18 @@ export const pathCSteps: StepData[] = [
           { label: "Return to this page and try again." },
         ],
         fixScreenshotSrc: "/screenshot-fix-remove-waba-from-portfolio.png",
-        fixNote: "After removing the account, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
+        fixNote: "After removing, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
+        subFix: {
+          trigger: "If you get a permission error when trying to remove:",
+          steps: [
+            { label: 'Click "Assign People" on the WhatsApp account.' },
+            { label: "Select yourself from the list." },
+            { label: 'Under Full control, enable "Everything".' },
+            { label: 'Click "Assign".' },
+            { label: "Then retry step 5 above." },
+          ],
+          screenshotSrc: "/screenshot-fix-assign-full-control.png",
+        },
       },
       {
         branchId: "C1.II",
@@ -52,6 +63,17 @@ export const pathCSteps: StepData[] = [
         ],
         fixScreenshotSrc: "/screenshot-fix-remove-wba-partner-portfolio.png",
         fixNote: "After removing, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
+        subFix: {
+          trigger: "If you get a permission error when trying to remove:",
+          steps: [
+            { label: 'Click "Assign People" on the WhatsApp account.' },
+            { label: "Select yourself from the list." },
+            { label: 'Under Full control, enable "Everything".' },
+            { label: 'Click "Assign".' },
+            { label: 'Then retry "Remove from business portfolio" (step 5 above).' },
+          ],
+          screenshotSrc: "/screenshot-fix-assign-full-control.png",
+        },
       },
     ],
   },

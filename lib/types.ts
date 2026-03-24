@@ -13,6 +13,11 @@ export interface CommonError {
   fixSteps?: { label: string; href?: string }[]; // step-by-step fix instructions
   fixScreenshotSrc?: string;   // screenshot showing the fix
   fixNote?: string;            // warning or timing note shown after fix steps
+  subFix?: {                   // nested fix for a blocker within the main fix
+    trigger: string;           // e.g. "If you get a permission error on step 5:"
+    steps: { label: string; href?: string }[];
+    screenshotSrc?: string;
+  };
 }
 
 export interface StepData {
