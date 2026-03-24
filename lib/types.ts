@@ -12,6 +12,7 @@ export interface CommonError {
   deadEndNote?: string;        // placeholder text while fix is being researched
   fixSteps?: { label: string; href?: string }[]; // step-by-step fix instructions
   fixScreenshotSrc?: string;   // screenshot showing the fix
+  fixNote?: string;            // warning or timing note shown after fix steps
 }
 
 export interface StepData {
