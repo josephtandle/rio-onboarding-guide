@@ -7,7 +7,7 @@ export default function PathCPage() {
   return (
     <PathPage
       pathId="path-c"
-      pathTitle="Ready to Connect"
+      pathTitle="Connect a WhatsApp Business App"
       screenIdPrefix="C"
       steps={pathCSteps}
     />
