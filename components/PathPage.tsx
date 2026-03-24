@@ -197,7 +197,7 @@ export default function PathPage({
                 onComplete={() => handleComplete(step.id)}
                 onBranch={(action) => handleBranch(step.id, action)}
                 totalSteps={visibleSteps.length}
-                screenId={`${screenIdPrefix}-${step.number}`}
+                screenId={`${screenIdPrefix}${step.number}`}
               />
             ))}
           </div>

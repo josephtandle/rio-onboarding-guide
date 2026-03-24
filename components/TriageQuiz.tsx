@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import ScreenshotPlaceholder from "./ScreenshotPlaceholder";
 
-type Stage = "q1" | "q1-help" | "q2" | "disambiguation";
+type Stage = "migration" | "wba-type";
 
 // Screen ID badge — shown bottom-right of every quiz card
 function ScreenId({ id }: { id: string }) {
@@ -17,7 +16,7 @@ function ScreenId({ id }: { id: string }) {
 }
 
 export default function TriageQuiz() {
-  const [stage, setStage] = useState<Stage>("q1");
+  const [stage, setStage] = useState<Stage>("migration");
   const [history, setHistory] = useState<Stage[]>([]);
   const router = useRouter();
 
@@ -39,160 +38,131 @@ export default function TriageQuiz() {
     });
   }
 
-  const canGoBack = history.length > 0;
-
   return (
     <div className="mx-auto w-full max-w-xl">
       {/* Progress dots */}
       <div className="mb-6 flex justify-center gap-2">
-        {(["q1", "q2", "disambiguation"] as Stage[]).map((s) => (
+        {(["migration", "wba-type"] as Stage[]).map((s) => (
           <div
             key={s}
             className={`h-2 w-2 rounded-full ${
-              stage === s || (s === "q1" && stage === "q1-help")
-                ? "bg-rio-teal"
-                : "bg-gray-300"
+              stage === s ? "bg-rio-teal" : "bg-gray-300"
             }`}
           />
         ))}
       </div>
 
-      {/* Q1 */}
-      {stage === "q1" && (
+      {/* Q1: Migration check */}
+      {stage === "migration" && (
         <QuizCard
           screenId="1A"
-          pageTitle="Step 1 of 3"
-          question="Have you ever set up your number in Meta Business Manager (business.facebook.com)?"
+          pageTitle="Step 1 of 2"
+          question="Is your number currently connected to another WhatsApp API provider (ManyChat, Wati, 360dialog, etc.)?"
           options={[
-            { label: "No / Not sure", onClick: () => advance("q1-help") },
-            { label: "Yes", onClick: () => advance("q2") },
+            { label: "No", onClick: () => advance("wba-type") },
+            { label: "Yes, I am migrating from another provider", onClick: () => goTo("/path-d") },
           ]}
           onBack={null}
         />
       )}
 
-      {/* Q1 help */}
-      {stage === "q1-help" && (
+      {/* Q2: WBA type selection */}
+      {stage === "wba-type" && (
         <div className="relative rounded-xl bg-rio-white p-6 shadow-sm">
           <ScreenId id="1B" />
-          <p className="mb-1 text-xs font-medium text-rio-green uppercase tracking-wide">How to check</p>
-          <h3 className="mb-4 text-lg font-semibold text-rio-black">
-            Do you have a Business Portfolio?
-          </h3>
-          <ol className="mb-4 space-y-3 text-sm text-rio-black">
-            <li className="flex gap-2">
-              <span className="flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-rio-mint text-rio-teal text-xs font-bold">1</span>
-              <span>
-                Go to{" "}
-                <a
-                  href="https://business.facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-rio-teal underline hover:opacity-80"
-                >
-                  business.facebook.com
-                </a>{" "}
-                in your browser.
-              </span>
-            </li>
-            <li className="flex gap-2">
-              <span className="flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-rio-mint text-rio-teal text-xs font-bold">2</span>
-              <span>Log in with your Facebook account.</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-rio-mint text-rio-teal text-xs font-bold">3</span>
-              <span>Look at the top left. Do you see a business name (not your personal name)?</span>
-            </li>
-          </ol>
-          <div className="overflow-hidden rounded-lg border border-gray-200">
-            <Image
-              src="/screenshot-1b-business-portfolio.png"
-              alt="Meta Business Suite showing a list of business portfolios on the left side"
-              width={667}
-              height={600}
-              className="w-full"
-            />
-            <p className="bg-gray-50 px-3 py-2 text-xs text-gray-500">
-              Your business portfolios appear in the left column. If you see names like these, you have a Business Portfolio.
-            </p>
-          </div>
-          <p className="mt-4 mb-3 text-sm font-medium text-rio-black">
-            After checking, answer below:
-          </p>
-          <div className="flex flex-col gap-3">
-            <button
-              onClick={() => advance("q2")}
-              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
-            >
-              Yes, I see my business name
-            </button>
-            <button
-              onClick={() => goTo("/path-a")}
-              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
-            >
-              No, I do not have a business account
-            </button>
-          </div>
-          <button
-            onClick={goBack}
-            className="mt-4 flex items-center gap-1 text-sm text-rio-green hover:underline"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
-            Back
-          </button>
-        </div>
-      )}
-
-      {/* Q2 */}
-      {stage === "q2" && (
-        <QuizCard
-          screenId="2A"
-          pageTitle="Step 2 of 3"
-          question="Is your number currently connected to another WhatsApp API provider (ManyChat, Wati, 360dialog, etc.)?"
-          options={[
-            { label: "No", onClick: () => advance("disambiguation") },
-            { label: "Yes, I am migrating from another provider", onClick: () => goTo("/path-d") },
-          ]}
-          onBack={goBack}
-        />
-      )}
-
-      {/* Disambiguation */}
-      {stage === "disambiguation" && (
-        <div className="relative rounded-xl bg-rio-white p-6 shadow-sm">
-          <ScreenId id="2B" />
-          <p className="mb-1 text-xs font-medium text-rio-green uppercase tracking-wide">Step 3 of 3</p>
-          <h3 className="mb-4 text-lg font-semibold text-rio-black">
-            Is your number Connected in Meta?
+          <p className="mb-1 text-xs font-medium text-rio-green uppercase tracking-wide">Step 2 of 2</p>
+          <h3 className="mb-2 text-lg font-semibold text-rio-black">
+            What happens during setup
           </h3>
           <p className="mb-4 text-sm text-rio-black">
-            Log into{" "}
-            <a
-              href="https://business.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-rio-teal underline hover:opacity-80"
-            >
-              business.facebook.com
-            </a>{" "}
-            → click the <strong>Settings gear</strong> (top left) → <strong>Accounts</strong> → <strong>WhatsApp Accounts</strong>
+            When you open Rio&apos;s setup link, you&apos;ll see a screen to select your business assets. There are two selections to make:
           </p>
-          <p className="mb-3 text-sm font-medium text-rio-black">
-            Does your number show as &ldquo;Connected&rdquo; or have a green status?
+
+          {/* Business Portfolio */}
+          <div className="mb-4 rounded-lg border border-gray-200 p-4">
+            <p className="mb-1 text-xs font-semibold text-rio-teal uppercase tracking-wide">1 · Business Portfolio</p>
+            <p className="mb-3 text-sm text-rio-black">
+              Pick an existing Business Portfolio or create a new one. You don&apos;t need to set this up in advance — it can be done directly in the signup flow.
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <Image
+                  src="/screenshot-embedded-signup-portfolio-pick-existing.png"
+                  alt="Business portfolio dropdown showing a list of existing portfolios to choose from"
+                  width={280}
+                  height={200}
+                  className="w-full rounded-lg border border-gray-200"
+                />
+                <p className="mt-1 text-center text-xs text-gray-500">Pick existing</p>
+              </div>
+              <div>
+                <Image
+                  src="/screenshot-embedded-signup-portfolio-create-new.png"
+                  alt="Business portfolio dropdown showing the option to create a new business portfolio"
+                  width={280}
+                  height={200}
+                  className="w-full rounded-lg border border-gray-200"
+                />
+                <p className="mt-1 text-center text-xs text-gray-500">Create new</p>
+              </div>
+            </div>
+          </div>
+
+          {/* WBA type */}
+          <div className="mb-5 rounded-lg border border-gray-200 p-4">
+            <p className="mb-1 text-xs font-semibold text-rio-teal uppercase tracking-wide">2 · WhatsApp Business Account</p>
+            <p className="mb-3 text-sm text-rio-black">
+              After choosing your portfolio, select one of two options:
+            </p>
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div>
+                <Image
+                  src="/screenshot-embedded-signup-waba-create-new.png"
+                  alt="WhatsApp Business account dropdown showing Create a WhatsApp Business account option"
+                  width={280}
+                  height={160}
+                  className="w-full rounded-lg border border-gray-200"
+                />
+                <p className="mt-1 text-center text-xs text-gray-500">For new numbers</p>
+              </div>
+              <div>
+                <Image
+                  src="/screenshot-embedded-signup-waba-connect-existing.png"
+                  alt="WhatsApp Business account dropdown showing Connect a WhatsApp Business App option"
+                  width={280}
+                  height={160}
+                  className="w-full rounded-lg border border-gray-200"
+                />
+                <p className="mt-1 text-center text-xs text-gray-500">For existing WBA</p>
+              </div>
+            </div>
+            <ul className="space-y-2 text-sm text-rio-black">
+              <li className="flex gap-2">
+                <span className="mt-0.5 flex-shrink-0 font-bold text-rio-teal">→</span>
+                <span><strong>Create a WhatsApp Business account</strong> — converts a regular phone number into a WhatsApp Business number.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-0.5 flex-shrink-0 font-bold text-rio-teal">→</span>
+                <span><strong>Connect a WhatsApp Business App</strong> — use this only if you already have a WhatsApp Business phone number inside your Business Portfolio.</span>
+              </li>
+            </ul>
+          </div>
+
+          <p className="mb-3 text-sm font-semibold text-rio-black">
+            Which option applies to you?
           </p>
-          <ScreenshotPlaceholder description="Meta Business Manager — WhatsApp Accounts page showing a number with 'Connected' green status" />
-          <div className="mt-4 flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <button
               onClick={() => goTo("/path-b")}
               className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
             >
-              No, it does not show as Connected
+              Create a WhatsApp Business account
             </button>
             <button
               onClick={() => goTo("/path-c")}
               className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
             >
-              Yes, it shows Connected or green
+              Connect a WhatsApp Business App
             </button>
           </div>
           <button
@@ -203,16 +173,6 @@ export default function TriageQuiz() {
             Back
           </button>
         </div>
-      )}
-
-      {/* Start over link — always visible except Q1 */}
-      {canGoBack && stage !== "q1-help" && stage !== "disambiguation" && (
-        <button
-          onClick={() => { setHistory([]); setStage("q1"); }}
-          className="mt-4 block w-full text-center text-sm text-rio-green hover:underline"
-        >
-          &larr; Start over
-        </button>
       )}
     </div>
   );

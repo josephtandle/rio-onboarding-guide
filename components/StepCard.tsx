@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { StepData } from "@/lib/types";
 import ErrorAccordion from "./ErrorAccordion";
 import ScreenshotPlaceholder from "./ScreenshotPlaceholder";
@@ -189,10 +190,20 @@ export default function StepCard({
           </div>
         )}
 
-        {/* Screenshot placeholder */}
-        {step.screenshotPlaceholder && (
+        {/* Screenshot — real image or placeholder */}
+        {step.screenshotSrc ? (
+          <div className="mb-4 overflow-hidden rounded-lg border border-gray-200">
+            <Image
+              src={step.screenshotSrc}
+              alt={step.screenshotPlaceholder || "Screenshot"}
+              width={600}
+              height={400}
+              className="w-full"
+            />
+          </div>
+        ) : step.screenshotPlaceholder ? (
           <ScreenshotPlaceholder description={step.screenshotPlaceholder} />
-        )}
+        ) : null}
 
         {/* Tell me more */}
         {step.tellMeMore && (

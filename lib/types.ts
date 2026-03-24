@@ -6,6 +6,10 @@ export interface StepAction {
 export interface CommonError {
   title: string;
   description: string;
+  branchId?: string;      // e.g. "B6.I"
+  screenshotSrc?: string;
+  isDeadEnd?: boolean;
+  deadEndNote?: string;
 }
 
 export interface StepData {
@@ -18,6 +22,7 @@ export interface StepData {
   whatYouShouldSee?: string;
   warningCallout?: string;
   screenshotPlaceholder?: string;
+  screenshotSrc?: string; // path to real screenshot in /public
   commonErrors?: CommonError[];
   branch?: {
     question: string;

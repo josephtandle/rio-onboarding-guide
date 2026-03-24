@@ -7,7 +7,7 @@ export default function PathBPage() {
   return (
     <PathPage
       pathId="path-b"
-      pathTitle="Finish Your WhatsApp Setup"
+      pathTitle="Create a WhatsApp Business Account"
       screenIdPrefix="B"
       steps={pathBSteps}
     />
