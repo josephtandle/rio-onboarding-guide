@@ -35,6 +35,15 @@ export const pathCSteps: StepData[] = [
         fixScreenshotSrc: "/screenshot-fix-remove-waba-from-portfolio.png",
         fixNote: "After removing the account, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
       },
+      {
+        branchId: "C1.II",
+        title: "The business is already sharing this WhatsApp Business Account with a partner. Switching partners is not supported in this flow.",
+        description:
+          "Disconnect the current partner in the WhatsApp Business App, then return here to connect a new partner.",
+        screenshotSrc: "/screenshot-error-wba-already-sharing-partner.png",
+        isDeadEnd: true,
+        deadEndNote: "I will update with recommended fixes for this error.",
+      },
     ],
   },
   {
