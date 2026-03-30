@@ -39,7 +39,7 @@ export default function TriageQuiz() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-xl">
+    <div className="mx-auto w-full max-w-2xl">
       {/* Progress dots */}
       <div className="mb-6 flex justify-center gap-2">
         {(["migration", "wba-type"] as Stage[]).map((s) => (
@@ -82,15 +82,15 @@ export default function TriageQuiz() {
           <div className="mb-4 rounded-lg border border-gray-200 p-4">
             <p className="mb-1 text-xs font-semibold text-rio-teal uppercase tracking-wide">1 · Business Portfolio</p>
             <p className="mb-3 text-sm text-rio-black">
-              Pick an existing Business Portfolio or create a new one. You don&apos;t need to set this up in advance — it can be done directly in the signup flow.
+              Pick an existing business portfolio or create one during the signup flow. If you have one, pick your existing portfolio; if not, you can set up a new one during the flow.
             </p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <Image
                   src="/screenshot-embedded-signup-portfolio-pick-existing.png"
                   alt="Business portfolio dropdown showing a list of existing portfolios to choose from"
-                  width={280}
-                  height={200}
+                  width={400}
+                  height={280}
                   className="w-full rounded-lg border border-gray-200"
                 />
                 <p className="mt-1 text-center text-xs text-gray-500">Pick existing</p>
@@ -99,8 +99,8 @@ export default function TriageQuiz() {
                 <Image
                   src="/screenshot-embedded-signup-portfolio-create-new.png"
                   alt="Business portfolio dropdown showing the option to create a new business portfolio"
-                  width={280}
-                  height={200}
+                  width={400}
+                  height={280}
                   className="w-full rounded-lg border border-gray-200"
                 />
                 <p className="mt-1 text-center text-xs text-gray-500">Create new</p>
@@ -112,57 +112,36 @@ export default function TriageQuiz() {
           <div className="mb-5 rounded-lg border border-gray-200 p-4">
             <p className="mb-1 text-xs font-semibold text-rio-teal uppercase tracking-wide">2 · WhatsApp Business Account</p>
             <p className="mb-3 text-sm text-rio-black">
-              After choosing your portfolio, select one of two options:
+              After choosing your portfolio, you will see this option:
             </p>
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              <div>
-                <Image
-                  src="/screenshot-embedded-signup-waba-create-new.png"
-                  alt="WhatsApp Business account dropdown showing Create a WhatsApp Business account option"
-                  width={280}
-                  height={160}
-                  className="w-full rounded-lg border border-gray-200"
-                />
-                <p className="mt-1 text-center text-xs text-gray-500">For new numbers</p>
-              </div>
-              <div>
-                <Image
-                  src="/screenshot-embedded-signup-waba-connect-existing.png"
-                  alt="WhatsApp Business account dropdown showing Connect a WhatsApp Business App option"
-                  width={280}
-                  height={160}
-                  className="w-full rounded-lg border border-gray-200"
-                />
-                <p className="mt-1 text-center text-xs text-gray-500">For existing WBA</p>
-              </div>
+            <div className="mb-3">
+              <Image
+                src="/screenshot-embedded-signup-waba-connect-existing.png"
+                alt="WhatsApp Business account dropdown showing Connect a WhatsApp Business App option"
+                width={600}
+                height={200}
+                className="w-full rounded-lg border border-gray-200"
+              />
             </div>
-            <ul className="space-y-2 text-sm text-rio-black">
-              <li className="flex gap-2">
-                <span className="mt-0.5 flex-shrink-0 font-bold text-rio-teal">→</span>
-                <span><strong>Create a WhatsApp Business account</strong> — converts a regular phone number into a WhatsApp Business number.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-0.5 flex-shrink-0 font-bold text-rio-teal">→</span>
-                <span><strong>Connect a WhatsApp Business App</strong> — use this only if you already have a WhatsApp Business phone number inside your Business Portfolio.</span>
-              </li>
-            </ul>
+            <p className="text-sm text-rio-black">
+              Choose <strong>Connect a WhatsApp Business App</strong>. This is for numbers already running on WhatsApp for Business, which is the case for most people.
+            </p>
           </div>
 
-          <p className="mb-3 text-sm font-semibold text-rio-black">
-            Which option applies to you?
-          </p>
           <div className="flex flex-col gap-3">
             <button
-              onClick={() => goTo("/path-b")}
-              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
-            >
-              Create a WhatsApp Business account
-            </button>
-            <button
               onClick={() => goTo("/path-c")}
-              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-medium text-white hover:opacity-90"
+              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-semibold text-white hover:opacity-90"
             >
               Connect a WhatsApp Business App
+            </button>
+          </div>
+          <div className="mt-4 text-center">
+            <button
+              onClick={() => goTo("/path-b")}
+              className="text-xs text-gray-400 hover:underline"
+            >
+              I already have a WhatsApp for Business account <span className="text-gray-300">(less likely)</span>
             </button>
           </div>
           <button

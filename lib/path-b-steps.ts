@@ -24,7 +24,7 @@ export const pathBSteps: StepData[] = [
       { label: 'Click the "Business portfolio" dropdown.' },
       {
         label:
-          "Select an existing portfolio — or choose 'Create a Business portfolio' if you don't have one yet.",
+          "Select an existing portfolio, or choose 'Create a Business portfolio' if you don't have one yet.",
       },
       { label: 'Click "Continue".' },
     ],
@@ -32,7 +32,7 @@ export const pathBSteps: StepData[] = [
     screenshotPlaceholder:
       "Meta embedded signup — Business portfolio dropdown showing list of portfolios",
     tellMeMore:
-      "Your Business Portfolio is how Meta groups your business assets. If you have multiple businesses, pick the one that owns the phone number you're connecting. You can create a new one here if needed — no advance setup required.",
+      "Your Business Portfolio is how Meta groups your business assets. If you have multiple businesses, pick the one that owns the phone number you're connecting. You can create a new one here if needed (no advance setup required).",
   },
   {
     id: "step-3",
@@ -68,7 +68,7 @@ export const pathBSteps: StepData[] = [
     warningCallout:
       "Your business name must match the name on your website. A mismatch is the most common reason Meta rejects the setup.",
     tellMeMore:
-      "Country is pre-filled and cannot be changed here. The website you enter will be checked by Meta during their review — make sure it loads correctly and displays your business name.",
+      "Country is pre-filled and cannot be changed here. The website you enter will be checked by Meta during their review, so make sure it loads correctly and displays your business name.",
   },
   {
     id: "step-5",
@@ -83,7 +83,7 @@ export const pathBSteps: StepData[] = [
     screenshotPlaceholder:
       "Meta embedded signup — Add your WhatsApp phone number screen showing two options",
     tellMeMore:
-      '"Use a display name only" sends messages without a real phone number — recipients only see a name. Always choose "Add a new number" so customers can actually reach you by phone.',
+      '"Use a display name only" sends messages without a real phone number (recipients only see a name). Always choose "Add a new number" so customers can actually reach you by phone.',
   },
   {
     id: "step-6",
@@ -102,7 +102,7 @@ export const pathBSteps: StepData[] = [
     warningCallout:
       "Your display name must match your company name exactly. No unnecessary punctuation, emojis, or trademark symbols (e.g. ™ or ®). Meta will reject names that don't follow their guidelines.",
     tellMeMore:
-      "Choose Phone call if your number is a landline — landlines cannot receive SMS codes. Text message works for all standard mobile numbers.",
+      "Choose Phone call if your number is a landline: landlines cannot receive SMS codes. Text message works for all standard mobile numbers.",
     commonErrors: [
       {
         branchId: "B6.I",

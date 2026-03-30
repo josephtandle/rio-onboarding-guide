@@ -9,7 +9,7 @@ const PREREQUISITES = [
   "I know my legal business name (as registered)",
   "I know my business address",
   "I have the phone number I want to connect nearby",
-  "That phone number is a real SIM or landline — NOT Google Voice, TextNow, or virtual number apps",
+  "That phone number is a real SIM or landline, not Google Voice, TextNow, or virtual number apps",
 ];
 
 interface PrerequisiteChecklistProps {
@@ -58,7 +58,7 @@ export default function PrerequisiteChecklist({
         ))}
       </div>
       <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-        <strong>Using the WhatsApp Business app on this number?</strong> You have two options: (a) keep using the app alongside Rio — Rio works with it, or (b) stop using the app and use Rio only. You will choose in a later step.
+        <strong>Using the WhatsApp Business app on this number?</strong> You have two options: (a) keep using the app alongside Rio (Rio works with it), or (b) stop using the app and use Rio only. You will choose in a later step.
       </div>
       <button
         onClick={onReady}

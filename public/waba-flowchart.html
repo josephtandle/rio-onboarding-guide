@@ -19,7 +19,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-black); }
 
-/* NAV */
 #snav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   background: var(--rio-teal); display: flex; align-items: center;
@@ -32,7 +31,6 @@ body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-blac
 }
 #snav a:hover { background: rgba(62,212,193,.15); border-color: var(--rio-aqua); color: var(--rio-aqua); }
 
-/* LEGEND */
 #legend {
   position: fixed; top: 48px; right: 14px; z-index: 900;
   background: #fff; border: 1.5px solid #ddd; border-radius: 10px;
@@ -42,42 +40,41 @@ body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-blac
 .li { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; font-size: 10.5px; color: #333; }
 .sw { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
 
-/* CANVAS */
 #canvas { padding-top: 48px; padding-bottom: 80px; overflow-x: auto; }
 #hdr { text-align: center; padding: 30px 20px 12px; }
-#hdr h1 { font-size: 24px; font-weight: 700; color: var(--rio-teal); margin-bottom: 4px; }
+#hdr h1 { font-size: 22px; font-weight: 700; color: var(--rio-teal); margin-bottom: 4px; }
 #hdr p  { font-size: 13px; color: var(--rio-green); }
 
-/* FLOW WRAPPER */
-#fw { position: relative; width: 1400px; margin: 0 auto; padding: 0 20px 80px; }
+#fw { position: relative; width: 1550px; margin: 0 auto; padding: 0 20px 80px; min-height: 2100px; }
 #asvg { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 5; overflow: visible; }
 
-/* NODE BASE */
 .n {
-  position: absolute; border-radius: 12px; padding: 13px 15px;
+  position: absolute; border-radius: 12px; padding: 12px 14px;
   box-shadow: 0 2px 10px rgba(0,0,0,.10); z-index: 10;
 }
-.nt { font-size: 12px; font-weight: 700; line-height: 1.35; margin-bottom: 4px; }
-.nd { font-size: 10.5px; line-height: 1.5; opacity: .78; }
+.nt  { font-size: 12px; font-weight: 700; line-height: 1.35; margin-bottom: 3px; }
+.nd  { font-size: 10.5px; line-height: 1.5; opacity: .80; }
+.nbr { font-size: 9px; font-weight: 700; font-family: monospace; background: rgba(0,0,0,.08);
+       display: inline-block; padding: 1px 5px; border-radius: 4px; margin-bottom: 4px; letter-spacing: .4px; }
 .n img {
-  display: block; max-width: 150px; width: 100%; margin: 9px auto 0;
+  display: block; max-width: 160px; width: 100%; margin: 8px auto 0;
   border-radius: 6px; border: 1px solid rgba(0,0,0,.12); cursor: pointer;
   transition: transform .14s, box-shadow .14s;
 }
 .n img:hover { transform: scale(1.04); box-shadow: 0 4px 14px rgba(0,0,0,.25); }
 
-/* NODE TYPES — Rio palette */
-.ns   { background: var(--rio-teal);  border: 2.5px solid var(--rio-aqua); color: #fff; }               /* start */
-.na   { background: var(--rio-sand);  border: 2px solid var(--rio-teal);   color: var(--rio-black); }   /* action */
-.ndec { background: var(--rio-mint);  border: 2px solid var(--rio-teal);   color: var(--rio-black); }   /* decision */
-.ne   { background: #FEE2E2;          border: 2px solid #DC2626;           color: #7F1D1D; }            /* error */
-.nfix { background: #FEF3C7;          border: 2px solid #D97706;           color: #78350F; }            /* fix required */
-.nsc  { background: var(--rio-aqua);  border: 2.5px solid var(--rio-teal); color: var(--rio-black); }  /* success */
-.np   { background: var(--rio-teal);  border: 2px solid var(--rio-black);  color: #fff; }               /* path label */
-.ndn  { background: var(--rio-black); border: 2.5px solid var(--rio-aqua); color: #fff; }               /* done */
-.nw   { background: #FEF3C7;          border: 2px solid #D97706;           color: #78350F; }            /* warning */
+.ns   { background: var(--rio-teal);  border: 2.5px solid var(--rio-aqua); color: #fff; }
+.na   { background: var(--rio-sand);  border: 2px solid var(--rio-teal);   color: var(--rio-black); }
+.ndec { background: var(--rio-mint);  border: 2px solid var(--rio-teal);   color: var(--rio-black); }
+.ne   { background: #FEE2E2;          border: 2px solid #DC2626;           color: #7F1D1D; }
+.nfix { background: #FEF3C7;          border: 2px solid #D97706;           color: #78350F; }
+.nsc  { background: var(--rio-aqua);  border: 2.5px solid var(--rio-teal); color: var(--rio-black); }
+.np   { background: var(--rio-teal);  border: 2px solid var(--rio-black);  color: #fff; }
+.ndn  { background: var(--rio-black); border: 2.5px solid var(--rio-aqua); color: #fff; }
+.nde  { background: #3F0808;          border: 2px solid #DC2626;           color: #fca5a5; }
+.nres { background: #EFF6FF;          border: 2px solid #2563EB;           color: #1E3A8A; }
+.nw   { background: #FEF3C7;          border: 2px solid #D97706;           color: #78350F; }
 
-/* LIGHTBOX */
 #lb { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 9999; align-items: center; justify-content: center; cursor: pointer; }
 #lb.open { display: flex; }
 #lb img { max-width: 92vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,.5); }
@@ -88,24 +85,22 @@ body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-blac
 
 <nav id="snav">
   <span class="brand">🌊 Rio WABA Flow</span>
-  <a href="#a-start">Start</a>
   <a href="#a-triage">Triage</a>
-  <a href="#a-paths">4 Paths</a>
-  <a href="#a-login">Facebook Login</a>
-  <a href="#a-waba">WABA Setup</a>
-  <a href="#a-phone">Phone Number</a>
-  <a href="#a-success">Success</a>
+  <a href="#a-path-b">Path B</a>
+  <a href="#a-path-c">Path C</a>
+  <a href="#a-path-d">Path D</a>
 </nav>
 
 <div id="legend">
   <h3>Legend</h3>
-  <div class="li"><div class="sw" style="background:#0A5F52;border:2px solid #3ED4C1"></div>Start / Done</div>
+  <div class="li"><div class="sw" style="background:#0A5F52;border:2px solid #3ED4C1"></div>Start / Path</div>
   <div class="li"><div class="sw" style="background:#E8DCC2;border:2px solid #0A5F52"></div>Action Step</div>
   <div class="li"><div class="sw" style="background:#C9F2D9;border:2px solid #0A5F52"></div>Decision</div>
   <div class="li"><div class="sw" style="background:#3ED4C1;border:2px solid #0A5F52"></div>Success</div>
   <div class="li"><div class="sw" style="background:#FEE2E2;border:2px solid #DC2626"></div>Error</div>
   <div class="li"><div class="sw" style="background:#FEF3C7;border:2px solid #D97706"></div>Fix / Warning</div>
-  <div class="li"><div class="sw" style="background:#0A5F52;border:2px solid #011D19"></div>Path Label</div>
+  <div class="li"><div class="sw" style="background:#3F0808;border:2px solid #DC2626"></div>Dead End</div>
+  <div class="li"><div class="sw" style="background:#EFF6FF;border:2px solid #2563EB"></div>Research Needed</div>
   <div class="li">
     <svg width="26" height="10" viewBox="0 0 26 10"><line x1="0" y1="5" x2="18" y2="5" stroke="#3ED4C1" stroke-width="2"/><polygon points="18,2 26,5 18,8" fill="#3ED4C1"/></svg>
     Flow Arrow
@@ -119,299 +114,209 @@ body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-blac
 <div id="canvas">
   <div id="hdr">
     <h1>🌊 Rio WABA Setup — Complete Flow</h1>
-    <p>Every path, every error, every decision — from start to connected</p>
+    <p>Updated 2026-03-24 · Every path, every error, every decision — from start to connected</p>
   </div>
 
   <div id="fw">
     <svg id="asvg"></svg>
 
-    <!-- anchor links -->
-    <span id="a-start"  style="position:absolute;top:0;left:0"></span>
-    <span id="a-triage" style="position:absolute;top:130px;left:0"></span>
-    <span id="a-paths"  style="position:absolute;top:790px;left:0"></span>
-    <span id="a-login"  style="position:absolute;top:1160px;left:0"></span>
-    <span id="a-waba"   style="position:absolute;top:1890px;left:0"></span>
-    <span id="a-phone"  style="position:absolute;top:2610px;left:0"></span>
-    <span id="a-success" style="position:absolute;top:3750px;left:0"></span>
+    <span id="a-triage"  style="position:absolute;top:0;left:0"></span>
+    <span id="a-path-b"  style="position:absolute;top:420px;left:0"></span>
+    <span id="a-path-c"  style="position:absolute;top:420px;left:900px"></span>
+    <span id="a-path-d"  style="position:absolute;top:160px;left:1200px"></span>
 
     <!-- ═══════════════════════════════════════════
-         SECTION 1 — TRIAGE
-         Main col: left=550, width=300, center=700
-         Left col: left=40, width=230
+         TRIAGE — centered around x=700
     ═══════════════════════════════════════════ -->
 
-    <!-- START -->
-    <div id="n-start" class="n ns" style="width:300px;left:550px;top:10px;">
+    <div id="n-start" class="n ns" style="width:260px;left:570px;top:20px;">
       <div class="nt">START: Begin Rio WABA Setup</div>
-      <div class="nd">Go to your Rio dashboard and click "Connect WhatsApp"</div>
+      <div class="nd">Go to Rio dashboard → "Connect WhatsApp"</div>
     </div>
 
-    <!-- Q1 -->
-    <div id="n-q1" class="n ndec" style="width:300px;left:550px;top:130px;">
-      <div class="nt">Q1: Do you have a Meta Business Portfolio?</div>
-      <div class="nd">Also called Meta Business Manager — business.facebook.com</div>
+    <!-- Q1: Migration? -->
+    <div id="n-q1" class="n ndec" style="width:260px;left:570px;top:130px;">
+      <div class="nt">Q1: Are you migrating from another provider?</div>
+      <div class="nd">ManyChat, Wati, 360dialog, or any other WhatsApp API provider</div>
     </div>
 
-    <!-- Q1 NO → Create Portfolio (left col, with screenshot) -->
-    <div id="n-create-portfolio" class="n na" style="width:230px;left:40px;top:260px;">
-      <div class="nt">⛔ Create Meta Business Portfolio First</div>
-      <div class="nd">Go to business.facebook.com → Create account. Business verification may take days.</div>
-      <img src="screenshot-1b-business-portfolio.png" alt="Business Portfolio" onclick="lb(this.src)">
+    <!-- Path D (top right — migration path placeholder) -->
+    <div id="n-path-d" class="n np" style="width:210px;left:1170px;top:185px;">
+      <div class="nt">PATH D — Migration</div>
+      <div class="nd">Migrating from another WhatsApp API provider. Steps TBD.</div>
     </div>
 
-    <!-- Q2 (below create-portfolio: 260+260+50=570) -->
-    <div id="n-q2" class="n ndec" style="width:300px;left:550px;top:570px;">
-      <div class="nt">Q2: Do you have a WhatsApp number to use?</div>
-      <div class="nd">A dedicated phone number not currently on WhatsApp or WhatsApp Business app</div>
+    <!-- Q2: WBA type -->
+    <div id="n-q2" class="n ndec" style="width:260px;left:570px;top:265px;">
+      <div class="nt">Q2: Which option will you choose in the signup?</div>
+      <div class="nd">After selecting your Business Portfolio, choose the WhatsApp account type</div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SECTION 2 — 4 PATHS
-         Paths spread: A=290, B=497, C=704, D=911 (185px each, gap=22)
-    ═══════════════════════════════════════════ -->
-
-    <!-- PATH LABELS -->
-    <div id="n-path-a" class="n np" style="width:185px;left:290px;top:790px;">
-      <div class="nt">PATH A</div>
-      <div class="nd">Have portfolio + have number</div>
-    </div>
-    <div id="n-path-b" class="n np" style="width:185px;left:497px;top:790px;">
-      <div class="nt">PATH B</div>
-      <div class="nd">Have portfolio + need a number</div>
-    </div>
-    <div id="n-path-c" class="n np" style="width:185px;left:704px;top:790px;">
-      <div class="nt">PATH C</div>
-      <div class="nd">No portfolio + have number</div>
-    </div>
-    <div id="n-path-d" class="n np" style="width:185px;left:911px;top:790px;">
-      <div class="nt">PATH D</div>
-      <div class="nd">No portfolio + need a number</div>
-    </div>
-
-    <!-- PATH B sub-step (below B) -->
-    <div id="n-get-number" class="n nfix" style="width:175px;left:502px;top:910px;">
-      <div class="nt">⚠️ Get a Real SIM Card</div>
-      <div class="nd">VoIP &amp; virtual numbers (Google Voice, Skype, TextNow) do NOT work. Use a real mobile or landline. <a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started/add-a-phone-number" target="_blank" style="color:#78350F;font-weight:600;text-decoration:underline;">Read the docs →</a></div>
-    </div>
-
-    <!-- PATH D sub-step (below D) -->
-    <div id="n-start-scratch" class="n na" style="width:175px;left:916px;top:910px;">
-      <div class="nt">Create Portfolio + Get Number</div>
-      <div class="nd">Complete both before continuing</div>
+    <!-- Research note: WBA type understanding -->
+    <div id="n-research" class="n nres" style="width:240px;left:570px;top:415px;">
+      <div class="nbr">⚠ RESEARCH — Mark</div>
+      <div class="nt">When to use each WBA option?</div>
+      <div class="nd">"Connect a WhatsApp Business App" = already have WBA running on phone. Exact conditions for "Create" TBD.</div>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SECTION 3 — EMBEDDED SIGNUP (all paths merge)
+         PATH LABELS
     ═══════════════════════════════════════════ -->
 
-    <div id="n-signup" class="n na" style="width:340px;left:530px;top:1040px;">
-      <div class="nt">EMBEDDED SIGNUP: Launch Rio Signup Flow</div>
-      <div class="nd">Click "Connect WhatsApp" in Rio — Facebook's embedded flow opens in a popup window</div>
+    <div id="n-path-b" class="n np" style="width:230px;left:245px;top:415px;">
+      <div class="nt">PATH B — Create a WBA</div>
+      <div class="nd">Create a WhatsApp Business account for a new or existing number</div>
+    </div>
+
+    <div id="n-path-c" class="n np" style="width:230px;left:895px;top:415px;">
+      <div class="nt">PATH C — Connect WBA App</div>
+      <div class="nd">Connect a WhatsApp Business App already running on your phone</div>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SECTION 4 — FACEBOOK LOGIN
-         Main col center=700
-         Left error col: left=40, width=220
+         PATH B STEPS (left column, cx≈360)
     ═══════════════════════════════════════════ -->
 
-    <!-- FB Login + FB Blocked (same row) -->
-    <div id="n-fb-blocked" class="n ne" style="width:220px;left:40px;top:1160px;">
-      <div class="nt">⛔ Security Check Blocked</div>
-      <div class="nd">Account flagged or login from unrecognized device</div>
-    </div>
-    <div id="n-fb-login" class="n na" style="width:280px;left:560px;top:1160px;">
-      <div class="nt">Log in to Facebook</div>
-      <div class="nd">Use the account linked to your Meta Business Portfolio</div>
+    <!-- B1 -->
+    <div id="n-b1" class="n na" style="width:230px;left:245px;top:545px;">
+      <div class="nbr">B1</div>
+      <div class="nt">Open Rio's Setup Link</div>
+      <div class="nd">Log in to Rio → "Connect WhatsApp" → Facebook popup opens. Log in with Facebook.</div>
     </div>
 
-    <!-- FB Try Another Way (below blocked, same row as security check) -->
-    <div id="n-fb-try-another" class="n nfix" style="width:210px;left:45px;top:1280px;">
-      <div class="nt">Try Another Way</div>
-      <div class="nd">Use backup code, SMS, or email to verify instead</div>
+    <!-- B2 -->
+    <div id="n-b2" class="n na" style="width:230px;left:245px;top:660px;">
+      <div class="nbr">B2</div>
+      <div class="nt">Select Business Portfolio</div>
+      <div class="nd">Pick existing portfolio or create a new one in the dropdown.</div>
+      <img src="screenshot-embedded-signup-portfolio-pick-existing.png" alt="Select Portfolio" onclick="lb(this.src)">
     </div>
 
-    <!-- Security Check (WITH screenshot, center) -->
-    <div id="n-security" class="n na" style="width:280px;left:560px;top:1280px;">
-      <div class="nt">Security Check: Approve on Another Device</div>
-      <div class="nd">Facebook sends a push notification to your phone — tap Approve to continue</div>
-      <img src="screenshot-facebook-security-check.png" alt="Security Check" onclick="lb(this.src)">
+    <!-- B3 -->
+    <div id="n-b3" class="n na" style="width:230px;left:245px;top:910px;">
+      <div class="nbr">B3</div>
+      <div class="nt">Select "Create a WhatsApp Business account"</div>
+      <div class="nd">Choose this option in the WhatsApp Business account dropdown.</div>
+      <img src="screenshot-embedded-signup-waba-create-new.png" alt="Create WBA" onclick="lb(this.src)">
     </div>
 
-    <!-- Trust Device (WITH screenshot) — security bottom: 1180+260=1440 -->
-    <div id="n-trust" class="n ndec" style="width:280px;left:560px;top:1580px;">
-      <div class="nt">Trust This Device?</div>
-      <div class="nd">"Trust" = skip this check next time · "Always Confirm" = higher security</div>
-      <img src="screenshot-facebook-trust-device.png" alt="Trust Device" onclick="lb(this.src)">
+    <!-- B4 -->
+    <div id="n-b4" class="n na" style="width:230px;left:245px;top:1150px;">
+      <div class="nbr">B4</div>
+      <div class="nt">Enter Business Information</div>
+      <div class="nd">Name, category, website, timezone. Name must match website.</div>
+      <img src="screenshot-embedded-signup-business-info.png" alt="Business Info" onclick="lb(this.src)">
+    </div>
+
+    <!-- B5 -->
+    <div id="n-b5" class="n na" style="width:230px;left:245px;top:1400px;">
+      <div class="nbr">B5</div>
+      <div class="nt">Choose "Add a new number"</div>
+      <div class="nd">Always select this. "Use display name only" does not give customers a real number to reach you.</div>
+      <img src="screenshot-embedded-signup-add-number-method.png" alt="Add Number" onclick="lb(this.src)">
+    </div>
+
+    <!-- B6 -->
+    <div id="n-b6" class="n na" style="width:230px;left:245px;top:1640px;">
+      <div class="nbr">B6</div>
+      <div class="nt">Enter Phone Number + Display Name</div>
+      <div class="nd">Country code + number. Display name must match company name exactly — no emojis or trademark symbols. Choose SMS or Phone call to verify.</div>
+      <img src="screenshot-embedded-signup-phone-number-form.png" alt="Phone + Name" onclick="lb(this.src)">
+    </div>
+
+    <!-- B6.I — dead end (left error col) -->
+    <div id="n-b6i" class="n ne" style="width:220px;left:10px;top:1640px;">
+      <div class="nbr">B6.I — DEAD END</div>
+      <div class="nt">⛔ Number already registered to WhatsApp</div>
+      <div class="nd">"This phone number is already registered to a WhatsApp account."</div>
+      <img src="screenshot-error-number-already-registered-whatsapp.png" alt="B6.I Error" onclick="lb(this.src)">
+    </div>
+
+    <!-- B6.I fix note -->
+    <div id="n-b6i-fix" class="n nfix" style="width:220px;left:10px;top:1920px;">
+      <div class="nbr">B6.I Fix</div>
+      <div class="nt">Delete number from WhatsApp app first</div>
+      <div class="nd">WhatsApp → Settings → Account → Delete account. Wait 3 min, then retry. <em>(Full fix instructions coming.)</em></div>
+    </div>
+
+    <!-- B7 -->
+    <div id="n-b7" class="n na" style="width:230px;left:245px;top:1930px;">
+      <div class="nbr">B7</div>
+      <div class="nt">Enter Verification Code</div>
+      <div class="nd">Check your phone for the 6-digit code. Enter it and click Verify.</div>
+    </div>
+
+    <!-- B8 -->
+    <div id="n-b8" class="n nsc" style="width:230px;left:245px;top:2060px;">
+      <div class="nbr">B8 ✓</div>
+      <div class="nt">Connected!</div>
+      <div class="nd">WhatsApp Business number is now live on Rio. Display name review may take minutes to days.</div>
     </div>
 
     <!-- ═══════════════════════════════════════════
-         SECTION 5 — SELECT ASSETS
-         trust bottom: 1480+260=1740
+         PATH C STEPS (right column, cx≈1010)
     ═══════════════════════════════════════════ -->
 
-    <!-- Select Business Assets (WITH screenshot) -->
-    <div id="n-select-assets" class="n na" style="width:280px;left:560px;top:1880px;">
-      <div class="nt">Select Business Assets to Share with Rio</div>
-      <div class="nd">Choose your Meta Business Portfolio — this links your WABA to Rio</div>
-      <img src="screenshot-create-waba-select-business-assets.png" alt="Select Business Assets" onclick="lb(this.src)">
+    <!-- C1 -->
+    <div id="n-c1" class="n na" style="width:230px;left:895px;top:545px;">
+      <div class="nbr">C1</div>
+      <div class="nt">Enter WhatsApp Business Phone Number</div>
+      <div class="nd">Enter the number currently running on your WhatsApp Business App. If not yet in your portfolio, Meta will ask you to verify it.</div>
+      <img src="screenshot-connect-wba-enter-phone.png" alt="Enter WBA Phone" onclick="lb(this.src)">
     </div>
 
-    <!-- Q3: New WABA or existing? — select-assets bottom: 1780+260=2040 -->
-    <div id="n-q3" class="n ndec" style="width:280px;left:560px;top:2180px;">
-      <div class="nt">Q3: Creating a New WABA or Using an Existing One?</div>
-      <div class="nd">WABA = WhatsApp Business Account</div>
+    <!-- C1.I error (right error col) -->
+    <div id="n-c1i-err" class="n ne" style="width:270px;left:1165px;top:545px;">
+      <div class="nbr">C1.I — DEAD END</div>
+      <div class="nt">⛔ Number limit reached</div>
+      <div class="nd">"You'll need to delete an existing one from WhatsApp Manager or request additional numbers."</div>
+      <img src="screenshot-error-wba-number-limit.png" alt="C1.I Error" onclick="lb(this.src)">
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SECTION 6 — WABA CREATION BRANCH
-         Q3 branches: LEFT = new WABA, RIGHT = existing WABA
-         Left col: 40, right col: 1090
-         Q3 bottom: 2080+80=2160
-    ═══════════════════════════════════════════ -->
-
-    <!-- Create New WABA — left col (WITH screenshot) -->
-    <div id="n-biz-info" class="n na" style="width:230px;left:40px;top:2300px;">
-      <div class="nt">Enter Business Info</div>
-      <div class="nd">Business name, website, category, timezone</div>
-      <img src="screenshot-create-waba-business-info.png" alt="Business Info" onclick="lb(this.src)">
+    <!-- C1.I fix -->
+    <div id="n-c1i-fix" class="n nfix" style="width:270px;left:1165px;top:810px;">
+      <div class="nbr">C1.I Fix</div>
+      <div class="nt">Remove WBA from Business Portfolio</div>
+      <div class="nd">business.facebook.com → Accounts → WhatsApp accounts → ⋯ → Remove from business portfolio. Wait 3 min–24h.</div>
+      <img src="screenshot-fix-remove-waba-from-portfolio.png" alt="C1.I Fix" onclick="lb(this.src)">
     </div>
 
-    <!-- Use Existing WABA — right col -->
-    <div id="n-existing-waba" class="n na" style="width:210px;left:1100px;top:2300px;">
-      <div class="nt">Select Existing WABA</div>
-      <div class="nd">Choose from your existing WhatsApp Business Accounts in the dropdown</div>
+    <!-- C1.II error (right error col, below C1.I fix) -->
+    <div id="n-c1ii-err" class="n ne" style="width:270px;left:1165px;top:1090px;">
+      <div class="nbr">C1.II — DEAD END</div>
+      <div class="nt">⛔ Already sharing with a partner</div>
+      <div class="nd">"The business is already sharing this WBA with a partner. Switching partners is not supported in this flow."</div>
+      <img src="screenshot-error-wba-already-sharing-partner.png" alt="C1.II Error" onclick="lb(this.src)">
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SECTION 7 — ADD PHONE NUMBER
-         biz-info bottom: 2200+260=2460, existing-waba bottom: 2200+80=2280
-         Merge below both: top=2500
-    ═══════════════════════════════════════════ -->
-
-    <!-- Add Phone Number (WITH screenshot, main col) -->
-    <div id="n-add-phone" class="n na" style="width:280px;left:560px;top:2600px;">
-      <div class="nt">Add Phone Number + Display Name</div>
-      <div class="nd">Enter the number you want to use for WhatsApp Business. Choose SMS or call verification.</div>
-      <img src="screenshot-create-waba-add-phone-number.png" alt="Add Phone Number" onclick="lb(this.src)">
+    <!-- C1.II fix -->
+    <div id="n-c1ii-fix" class="n nfix" style="width:270px;left:1165px;top:1360px;">
+      <div class="nbr">C1.II Fix</div>
+      <div class="nt">Remove WBA from Business Portfolio</div>
+      <div class="nd">Same fix as C1.I — business.facebook.com → Accounts → WhatsApp accounts → ⋯ → Remove from business portfolio. Wait 3 min–24h.</div>
+      <img src="screenshot-fix-remove-waba-partner-portfolio.png" alt="C1.II Fix" onclick="lb(this.src)">
     </div>
 
-    <!-- ERROR: BSP Partner (right col, same row as add-phone) WITH screenshot -->
-    <div id="n-err-bsp" class="n ne" style="width:260px;left:1090px;top:2600px;">
-      <div class="nt">⛔ ERROR: Number Already Has a BSP Partner</div>
-      <div class="nd">Locked to another WhatsApp Business Solution Provider (ManyChat, Wati, etc.)</div>
-      <img src="screenshot-error-already-has-partner.png" alt="BSP Error" onclick="lb(this.src)">
+    <!-- Permission sub-fix (shared, below both fixes) -->
+    <div id="n-c-perm" class="n nw" style="width:270px;left:1165px;top:1630px;">
+      <div class="nbr">C1.I / C1.II — Permission Sub-fix</div>
+      <div class="nt">⚠️ If you get a permission error when removing:</div>
+      <div class="nd">Click Assign People → select yourself → Full control: Everything → Assign. Then retry removal.</div>
+      <img src="screenshot-fix-assign-full-control.png" alt="Assign Full Control" onclick="lb(this.src)">
     </div>
 
-    <!-- Fix BSP (right col, below bsp error: 2500+260+20=2780) -->
-    <div id="n-fix-bsp" class="n nfix" style="width:260px;left:1090px;top:2880px;">
-      <div class="nt">Fix: Disconnect from Current BSP</div>
-      <div class="nd">WhatsApp Business Manager → Phone Numbers → Release Number. Wait 24–48 hours for propagation.</div>
+    <!-- C2 -->
+    <div id="n-c2" class="n na" style="width:230px;left:895px;top:810px;">
+      <div class="nbr">C2</div>
+      <div class="nt">Confirm Permissions</div>
+      <div class="nd">Review what Rio is requesting access to. Click Continue or Allow.</div>
     </div>
 
-    <!-- ERROR: WA Account Active (right col, below fix-bsp: 2780+90+20=2890) WITH screenshot -->
-    <div id="n-err-wa" class="n ne" style="width:260px;left:1090px;top:3010px;">
-      <div class="nt">⛔ ERROR: Number Registered to Existing WhatsApp Account</div>
-      <div class="nd">Number is still active in WhatsApp or WhatsApp Business app</div>
-      <img src="screenshot-error-number-registered-to-existing-wa.png" alt="WA Error" onclick="lb(this.src)">
-    </div>
-
-    <!-- Fix WA (right col, below wa error: 2910+260+20=3190) -->
-    <div id="n-fix-wa" class="n nfix" style="width:260px;left:1090px;top:3290px;">
-      <div class="nt">Fix: Release Number in Meta Business Manager</div>
-      <div class="nd">Go to WhatsApp Accounts → select your WABA → Phone Numbers → release the number. <a href="https://business.facebook.com/settings/whatsapp-business-accounts/" target="_blank" style="color:#78350F;font-weight:600;text-decoration:underline;">Open Meta Business Manager →</a> Then wait up to 3 minutes and retry.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SECTION 8 — VERIFY OTP
-         add-phone bottom: 2500+260=2760 → verify at 2800
-         Left col error: OTP not received
-    ═══════════════════════════════════════════ -->
-
-    <!-- OTP Not Received (left col, same row as verify) -->
-    <div id="n-err-otp" class="n ne" style="width:220px;left:40px;top:2900px;">
-      <div class="nt">⛔ OTP Not Received</div>
-      <div class="nd">Verification code never arrived via SMS</div>
-    </div>
-    <div id="n-fix-otp" class="n nfix" style="width:210px;left:45px;top:3030px;">
-      <div class="nt">Fix: Request New Code or Switch to Call</div>
-      <div class="nd">Wait 60 seconds, then tap "Call me instead"</div>
-    </div>
-
-    <!-- Verify OTP (WITH screenshot, main col) -->
-    <div id="n-verify" class="n na" style="width:280px;left:560px;top:2900px;">
-      <div class="nt">Verify Phone Number (Enter OTP)</div>
-      <div class="nd">Enter the 6-digit code sent via SMS or voice call to confirm ownership</div>
-      <img src="screenshot-create-waba-verify-phone-number.png" alt="Verify OTP" onclick="lb(this.src)">
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SECTION 9 — REVIEW & CONNECT
-         verify bottom: 2800+260=3060 → permissions at 3100
-    ═══════════════════════════════════════════ -->
-
-    <!-- Review Permissions (WITH screenshot) -->
-    <div id="n-permissions" class="n na" style="width:280px;left:560px;top:3200px;">
-      <div class="nt">Review: What You're Sharing with Rio</div>
-      <div class="nd">Rio will be able to manage WhatsApp accounts, access conversations, and send messages on your behalf</div>
-      <img src="screenshot-create-waba-review-permissions.png" alt="Review Permissions" onclick="lb(this.src)">
-    </div>
-
-    <!-- Connecting (WITH screenshot) — permissions bottom: 3100+260=3360 → connecting at 3400 -->
-    <div id="n-connecting" class="n nsc" style="width:270px;left:565px;top:3500px;">
-      <div class="nt">Connecting Your Account...</div>
-      <div class="nd">Rio is finalizing the connection with Meta. This may take a few moments.</div>
-      <img src="screenshot-create-waba-connecting.png" alt="Connecting" onclick="lb(this.src)">
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SECTION 10 — SUCCESS
-         connecting bottom: 3400+220=3620 → connected at 3660
-    ═══════════════════════════════════════════ -->
-
-    <!-- Connected! (WITH screenshot) -->
-    <div id="n-connected" class="n nsc" style="width:300px;left:550px;top:3760px;">
-      <div class="nt">✓ Your Account is Connected to Rio</div>
-      <div class="nd">WABA linked successfully. Rio will review your business within 24 hours — you'll only be contacted if there's an issue.</div>
-      <img src="screenshot-create-waba-connected-success.png" alt="Connected!" onclick="lb(this.src)">
-    </div>
-
-    <!-- Q4: Add payment? — connected bottom: 3660+260=3920 -->
-    <div id="n-q4" class="n ndec" style="width:280px;left:560px;top:4060px;">
-      <div class="nt">Q4: Add a Payment Method?</div>
-      <div class="nd">Required to send template messages or reply after the 24-hour conversation window</div>
-    </div>
-
-    <!-- Payment warning (left col) -->
-    <div id="n-payment-note" class="n nw" style="width:230px;left:40px;top:4180px;">
-      <div class="nt">⚠️ When Payment is Required</div>
-      <div class="nd">Template messages + any reply outside the 24h window require a card on file. Meta charges directly — typically a few cents per message.</div>
-    </div>
-
-    <!-- Add Payment (right col, WITH screenshot) -->
-    <div id="n-add-payment" class="n na" style="width:260px;left:1090px;top:4180px;">
-      <div class="nt">Meta Billing & Payments</div>
-      <div class="nd">Add a credit card in Meta Business Suite to enable template messaging</div>
-      <img src="screenshot-meta-billing-payment-method.png" alt="Payment Method" onclick="lb(this.src)">
-    </div>
-
-    <!-- Continue (merge) — payment-note bottom: 4080+120=4200, add-payment bottom: 4080+260=4340 -->
-    <div id="n-continue" class="n nsc" style="width:230px;left:585px;top:4480px;">
-      <div class="nt">Continue to Rio Setup</div>
-      <div class="nd">Payment configured (or skipped for now)</div>
-    </div>
-
-    <!-- Welcome (WITH screenshot) — continue bottom: 4380+75=4455 -->
-    <div id="n-welcome" class="n na" style="width:280px;left:560px;top:4595px;">
-      <div class="nt">Welcome to RIO! Quick Setup</div>
-      <div class="nd">Configure your business type, message categories, and quick reply snippets — or skip and start right away</div>
-      <img src="screenshot-rio-welcome.png" alt="Rio Welcome" onclick="lb(this.src)">
-    </div>
-
-    <!-- DONE — welcome bottom: 4495+260=4755 -->
-    <div id="n-done" class="n ndn" style="width:280px;left:560px;top:4900px;">
-      <div class="nt">🎉 DONE: WABA Setup Complete</div>
-      <div class="nd">You're live on Rio — ready for WhatsApp Business messaging</div>
+    <!-- C3 -->
+    <div id="n-c3" class="n nsc" style="width:230px;left:895px;top:940px;">
+      <div class="nbr">C3 ✓</div>
+      <div class="nt">Connected!</div>
+      <div class="nd">WhatsApp Business App number is now live on Rio.</div>
     </div>
 
   </div><!-- #fw -->
@@ -424,97 +329,44 @@ body { font-family: 'Inter', sans-serif; background: #fff; color: var(--rio-blac
 </div>
 
 <script>
-/* ── Lightbox ── */
 function lb(s){ document.getElementById('lbi').src=s; document.getElementById('lb').classList.add('open'); }
 function lbc(){ document.getElementById('lb').classList.remove('open'); }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') lbc(); });
 
-/* ── Arrow colors ── */
-var CA='#3ED4C1', CR='#DC2626', CAM='#D97706', CTeal='#0A5F52';
+var CA='#3ED4C1', CR='#DC2626', CAM='#D97706', CB='#2563EB', CTeal='#0A5F52';
 
-/*
- connections: [fromId, toId, label, color, fromSide, toSide]
- sides: top / bottom / left / right
-*/
 var CONN = [
   /* TRIAGE */
-  ['n-start',         'n-q1',             '',           CA,    'bottom','top'],
-  ['n-q1',            'n-create-portfolio','NO',         CR,    'left',  'top'],
-  ['n-create-portfolio','n-q2',           'then →',     CA,    'bottom','left'],
-  ['n-q1',            'n-q2',             'YES',         CA,    'bottom','top'],
+  ['n-start',    'n-q1',       '',               CA,  'bottom','top'],
+  ['n-q1',       'n-path-d',   'YES — migrating',CR,  'right', 'left'],
+  ['n-q1',       'n-q2',       'NO',             CA,  'bottom','top'],
+  ['n-q2',       'n-path-b',   'Create WBA',     CA,  'left',  'top'],
+  ['n-q2',       'n-path-c',   'Connect WBA App',CA,  'right', 'top'],
 
-  /* Q2 → PATHS */
-  ['n-q2',            'n-path-a',         'YES+port.',   CA,    'bottom','top'],
-  ['n-q2',            'n-path-b',         'NO+port.',    CA,    'bottom','top'],
-  ['n-q2',            'n-path-c',         'YES+no port.',CA,    'bottom','top'],
-  ['n-q2',            'n-path-d',         'NO+no port.', CA,    'bottom','top'],
+  /* PATH B */
+  ['n-path-b',   'n-b1',       '',               CA,  'bottom','top'],
+  ['n-b1',       'n-b2',       '',               CA,  'bottom','top'],
+  ['n-b2',       'n-b3',       '',               CA,  'bottom','top'],
+  ['n-b3',       'n-b4',       '',               CA,  'bottom','top'],
+  ['n-b4',       'n-b5',       '',               CA,  'bottom','top'],
+  ['n-b5',       'n-b6',       '',               CA,  'bottom','top'],
+  ['n-b6',       'n-b6i',      'B6.I error',     CR,  'left',  'right'],
+  ['n-b6i',      'n-b6i-fix',  '',               CR,  'bottom','top'],
+  ['n-b6',       'n-b7',       '',               CA,  'bottom','top'],
+  ['n-b7',       'n-b8',       '',               CA,  'bottom','top'],
 
-  /* PATH SUBSTEPS */
-  ['n-path-b',        'n-get-number',     '',            CA,    'bottom','top'],
-  ['n-path-d',        'n-start-scratch',  '',            CA,    'bottom','top'],
-
-  /* ALL PATHS → SIGNUP */
-  ['n-path-a',        'n-signup',         '',            CA,    'bottom','bottom'],
-  ['n-get-number',    'n-signup',         '',            CA,    'bottom','bottom'],
-  ['n-path-c',        'n-signup',         '',            CA,    'bottom','bottom'],
-  ['n-start-scratch', 'n-signup',         '',            CA,    'bottom','bottom'],
-
-  /* SIGNUP → FB LOGIN */
-  ['n-signup',        'n-fb-login',       '',            CA,    'bottom','top'],
-
-  /* FB BLOCKED BRANCH */
-  ['n-fb-login',      'n-fb-blocked',     'blocked?',    CR,    'left',  'right'],
-  ['n-fb-blocked',    'n-fb-try-another', '',            CR,    'bottom','top'],
-  ['n-fb-try-another','n-security',       'retry →',     CA,    'right', 'left'],
-
-  /* MAIN FB FLOW */
-  ['n-fb-login',      'n-security',       '',            CA,    'bottom','top'],
-  ['n-security',      'n-trust',          '',            CA,    'bottom','top'],
-  ['n-trust',         'n-select-assets',  '',            CA,    'bottom','top'],
-  ['n-select-assets', 'n-q3',             '',            CA,    'bottom','top'],
-
-  /* Q3 BRANCHES */
-  ['n-q3',            'n-biz-info',       'create new',  CA,    'left',  'top'],
-  ['n-q3',            'n-existing-waba',  'existing',    CA,    'right', 'top'],
-  ['n-biz-info',      'n-add-phone',      'next →',      CA,    'bottom','left'],
-  ['n-existing-waba', 'n-add-phone',      'next →',      CA,    'bottom','right'],
-
-  /* BSP PARTNER ERROR */
-  ['n-add-phone',     'n-err-bsp',        'error?',      CR,    'right', 'left'],
-  ['n-err-bsp',       'n-fix-bsp',        '',            CR,    'bottom','top'],
-  ['n-fix-bsp',       'n-add-phone',      '↩ retry',     CA,    'left',  'right'],
-
-  /* WA ACCOUNT ERROR */
-  ['n-add-phone',     'n-err-wa',         'error?',      CR,    'right', 'left'],
-  ['n-err-wa',        'n-fix-wa',         '',            CR,    'bottom','top'],
-  ['n-fix-wa',        'n-add-phone',      '↩ retry',     CA,    'left',  'right'],
-
-  /* MAIN PHONE FLOW */
-  ['n-add-phone',     'n-verify',         '',            CA,    'bottom','top'],
-
-  /* OTP ERROR */
-  ['n-verify',        'n-err-otp',        'no code?',    CR,    'left',  'right'],
-  ['n-err-otp',       'n-fix-otp',        '',            CR,    'bottom','top'],
-  ['n-fix-otp',       'n-verify',         '↩ retry',     CA,    'right', 'left'],
-
-  /* FINAL FLOW */
-  ['n-verify',        'n-permissions',    '',            CA,    'bottom','top'],
-  ['n-permissions',   'n-connecting',     '',            CA,    'bottom','top'],
-  ['n-connecting',    'n-connected',      '',            CA,    'bottom','top'],
-  ['n-connected',     'n-q4',             '',            CA,    'bottom','top'],
-
-  /* PAYMENT BRANCH */
-  ['n-q4',            'n-payment-note',   'note',        CAM,   'left',  'right'],
-  ['n-q4',            'n-add-payment',    'add card',    CA,    'right', 'top'],
-  ['n-q4',            'n-continue',       'skip',        CA,    'bottom','top'],
-  ['n-add-payment',   'n-continue',       '→',           CA,    'bottom','bottom'],
-
-  /* WRAP UP */
-  ['n-continue',      'n-welcome',        '',            CA,    'bottom','top'],
-  ['n-welcome',       'n-done',           '',            CA,    'bottom','top'],
+  /* PATH C */
+  ['n-path-c',   'n-c1',       '',               CA,  'bottom','top'],
+  ['n-c1',       'n-c1i-err',  'C1.I error',     CR,  'right', 'left'],
+  ['n-c1i-err',  'n-c1i-fix',  '',               CR,  'bottom','top'],
+  ['n-c1i-fix',  'n-c-perm',   'if perm error',  CAM, 'bottom','top'],
+  ['n-c1',       'n-c1ii-err', 'C1.II error',    CR,  'right', 'left'],
+  ['n-c1ii-err', 'n-c1ii-fix', '',               CR,  'bottom','top'],
+  ['n-c1ii-fix', 'n-c-perm',   'if perm error',  CAM, 'bottom','right'],
+  ['n-c1',       'n-c2',       '',               CA,  'bottom','top'],
+  ['n-c2',       'n-c3',       '',               CA,  'bottom','top'],
 ];
 
-/* ── Geometry helpers ── */
 function gr(id) {
   var el = document.getElementById(id), fw = document.getElementById('fw');
   if (!el || !fw) return null;
@@ -527,9 +379,9 @@ function gr(id) {
   };
 }
 function pt(r, s) {
-  if (s === 'top')    return { x: r.cx, y: r.top };
-  if (s === 'bottom') return { x: r.cx, y: r.top + r.height };
-  if (s === 'left')   return { x: r.left, y: r.cy };
+  if (s === 'top')    return { x: r.cx,           y: r.top };
+  if (s === 'bottom') return { x: r.cx,           y: r.top + r.height };
+  if (s === 'left')   return { x: r.left,         y: r.cy };
   if (s === 'right')  return { x: r.left + r.width, y: r.cy };
 }
 function bezMid(p0, c1, c2, p3, t) {
@@ -546,131 +398,72 @@ function draw() {
   var W = fw.scrollWidth, H = fw.scrollHeight;
   svg.setAttribute('width', W);
   svg.setAttribute('height', H);
-  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.innerHTML = '';
 
-  /* build arrow-head markers */
-  var colors = {};
-  CONN.forEach(function(c){ colors[c[3]] = 1; });
-  var defs = '<defs>';
-  Object.keys(colors).forEach(function(col) {
-    var id = 'ah' + col.replace('#','');
-    defs += '<marker id="' + id + '" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">' +
-            '<path d="M0,0 L0,6 L9,3 z" fill="' + col + '"/></marker>';
+  var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  [CA, CR, CAM, CB, CTeal].forEach(function(col) {
+    var mid = document.createElementNS('http://www.w3.org/2000/svg','marker');
+    mid.setAttribute('id','arr'+col.replace('#',''));
+    mid.setAttribute('markerWidth','7');
+    mid.setAttribute('markerHeight','7');
+    mid.setAttribute('refX','6');
+    mid.setAttribute('refY','3.5');
+    mid.setAttribute('orient','auto');
+    var poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points','0,0 7,3.5 0,7');
+    poly.setAttribute('fill',col);
+    mid.appendChild(poly);
+    defs.appendChild(mid);
   });
-  defs += '</defs>';
+  svg.appendChild(defs);
 
-  var body = '';
   CONN.forEach(function(c) {
-    var fid = c[0], tid = c[1], lbl = c[2], col = c[3], fs = c[4], ts = c[5];
+    var fid=c[0], tid=c[1], lbl=c[2], col=c[3], fs=c[4], ts=c[5];
     var fr = gr(fid), tr = gr(tid);
     if (!fr || !tr) return;
-
     var fp = pt(fr, fs), tp = pt(tr, ts);
-    var dx = tp.x - fp.x, dy = tp.y - fp.y;
-    var dist = Math.sqrt(dx*dx + dy*dy);
-    var bend = Math.max(60, dist * 0.35);
 
-    var c1, c2;
+    var dx = Math.abs(tp.x - fp.x), dy = Math.abs(tp.y - fp.y);
+    var tens = Math.max(40, Math.min(dx * 0.5, dy * 0.5, 120));
 
-    if (fs === 'bottom' && ts === 'top') {
-      // straight down with slight S-curve
-      var ox = (fp.x !== tp.x) ? (tp.x - fp.x) * 0.4 : 0;
-      c1 = { x: fp.x + ox * 0.3, y: fp.y + bend };
-      c2 = { x: tp.x - ox * 0.3, y: tp.y - bend };
+    var c1x = fp.x, c1y = fp.y, c2x = tp.x, c2y = tp.y;
+    if (fs === 'bottom') c1y += tens;
+    if (fs === 'top')    c1y -= tens;
+    if (fs === 'right')  c1x += tens;
+    if (fs === 'left')   c1x -= tens;
+    if (ts === 'top')    c2y -= tens;
+    if (ts === 'bottom') c2y += tens;
+    if (ts === 'left')   c2x -= tens;
+    if (ts === 'right')  c2x += tens;
 
-    } else if (fs === 'bottom' && ts === 'bottom') {
-      // both going to bottom — arc under
-      var maxY = Math.max(fr.top + fr.height, tr.top + tr.height) + 40;
-      c1 = { x: fp.x, y: maxY };
-      c2 = { x: tp.x, y: maxY };
-
-    } else if (fs === 'left' && ts === 'right') {
-      // going left — curve left
-      c1 = { x: fp.x - bend, y: fp.y };
-      c2 = { x: tp.x + bend, y: tp.y };
-
-    } else if (fs === 'right' && ts === 'left') {
-      // going right — curve right
-      c1 = { x: fp.x + bend, y: fp.y };
-      c2 = { x: tp.x - bend, y: tp.y };
-
-    } else if (fs === 'left' && ts === 'top') {
-      c1 = { x: fp.x - 50, y: fp.y };
-      c2 = { x: tp.x, y: tp.y - 50 };
-
-    } else if (fs === 'right' && ts === 'top') {
-      c1 = { x: fp.x + 50, y: fp.y };
-      c2 = { x: tp.x, y: tp.y - 50 };
-
-    } else if (fs === 'left' && ts === 'left') {
-      var lx = Math.min(fp.x, tp.x) - bend;
-      c1 = { x: lx, y: fp.y };
-      c2 = { x: lx, y: tp.y };
-
-    } else if (fs === 'right' && ts === 'right') {
-      var rx = Math.max(fp.x, tp.x) + bend;
-      c1 = { x: rx, y: fp.y };
-      c2 = { x: rx, y: tp.y };
-
-    } else if (fs === 'bottom' && ts === 'left') {
-      c1 = { x: fp.x, y: fp.y + Math.abs(dy) * 0.55 };
-      c2 = { x: tp.x - 50, y: tp.y };
-
-    } else if (fs === 'bottom' && ts === 'right') {
-      c1 = { x: fp.x, y: fp.y + Math.abs(dy) * 0.55 };
-      c2 = { x: tp.x + 50, y: tp.y };
-
-    } else {
-      c1 = { x: fp.x + dx * 0.33, y: fp.y + dy * 0.33 };
-      c2 = { x: tp.x - dx * 0.33, y: tp.y - dy * 0.33 };
-    }
-
-    var mid = col.replace('#','');
-    var isDashed = (col === CR) ? ' stroke-dasharray="6,3"' : '';
-    var d = 'M' + fp.x.toFixed(1) + ',' + fp.y.toFixed(1) +
-            ' C' + c1.x.toFixed(1) + ',' + c1.y.toFixed(1) +
-            ' '  + c2.x.toFixed(1) + ',' + c2.y.toFixed(1) +
-            ' '  + tp.x.toFixed(1) + ',' + tp.y.toFixed(1);
-
-    body += '<path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="2"' +
-            isDashed + ' marker-end="url(#ah' + mid + ')" stroke-linecap="round" opacity="0.9"/>';
+    var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    var d = 'M '+fp.x+' '+fp.y+' C '+c1x+' '+c1y+' '+c2x+' '+c2y+' '+tp.x+' '+tp.y;
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', col);
+    path.setAttribute('stroke-width', col === CR ? '1.8' : '2');
+    if (col === CR) path.setAttribute('stroke-dasharray','5,3');
+    path.setAttribute('marker-end','url(#arr'+col.replace('#','')+')');
+    svg.appendChild(path);
 
     if (lbl) {
-      var mp = bezMid(fp, c1, c2, tp, 0.45);
-      var tw = lbl.length * 6.2 + 14;
-      body += '<rect x="' + (mp.x - tw/2).toFixed(1) + '" y="' + (mp.y - 9).toFixed(1) +
-              '" width="' + tw.toFixed(1) + '" height="18" rx="5"' +
-              ' fill="white" stroke="' + col + '" stroke-width="1" opacity="0.97"/>';
-      body += '<text x="' + mp.x.toFixed(1) + '" y="' + (mp.y + 5.5).toFixed(1) + '"' +
-              ' text-anchor="middle" font-family="Inter,sans-serif" font-size="9"' +
-              ' font-weight="600" fill="' + col + '">' + lbl + '</text>';
+      var mid = bezMid(fp,{x:c1x,y:c1y},{x:c2x,y:c2y},tp,0.45);
+      var txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x', mid.x);
+      txt.setAttribute('y', mid.y - 5);
+      txt.setAttribute('text-anchor','middle');
+      txt.setAttribute('font-size','9.5');
+      txt.setAttribute('font-family','Inter,sans-serif');
+      txt.setAttribute('font-weight','600');
+      txt.setAttribute('fill', col);
+      txt.textContent = lbl;
+      svg.appendChild(txt);
     }
   });
-
-  svg.innerHTML = defs + body;
 }
 
-/* set #fw height to fit all absolutely-positioned nodes */
-function fixHeight() {
-  var fw = document.getElementById('fw'), maxY = 0;
-  fw.querySelectorAll('.n').forEach(function(n) {
-    var b = (parseInt(n.style.top) || 0) + n.offsetHeight;
-    if (b > maxY) maxY = b;
-  });
-  fw.style.height = (maxY + 120) + 'px';
-}
-
-window.addEventListener('load',   function(){ fixHeight(); draw(); });
-window.addEventListener('resize',  function(){ fixHeight(); draw(); });
-
-/* smooth nav scroll */
-document.querySelectorAll('#snav a').forEach(function(a) {
-  a.addEventListener('click', function(e) {
-    e.preventDefault();
-    var t = document.querySelector(this.getAttribute('href'));
-    if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth' });
-  });
-});
+window.addEventListener('load', draw);
+window.addEventListener('resize', draw);
 </script>
 </body>
 </html>

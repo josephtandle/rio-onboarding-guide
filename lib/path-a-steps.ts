@@ -36,9 +36,9 @@ export const pathASteps: StepData[] = [
       { label: "Check your email. Meta will send a confirmation. Click the link." },
     ],
     tellMeMore:
-      "Use your legal business name — the same name on your business registration documents. This is not your trading name or nickname.",
+      "Use your legal business name, the same name on your business registration documents. This is not your trading name or nickname.",
     warningCallout:
-      "Agency clients: Use your own business account — not your agency's. An agency-owned account will block the setup.",
+      "Agency clients: Use your own business account, not your agency's. An agency-owned account will block the setup.",
     screenshotPlaceholder: "New Meta Business Manager dashboard with business name at top left",
   },
   {

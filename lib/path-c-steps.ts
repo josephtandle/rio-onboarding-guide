@@ -33,7 +33,7 @@ export const pathCSteps: StepData[] = [
           { label: "Return to this page and try again." },
         ],
         fixScreenshotSrc: "/screenshot-fix-remove-waba-from-portfolio.png",
-        fixNote: "After removing, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
+        fixNote: "After removing, wait at least 3 minutes before trying again. It can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
         subFix: {
           trigger: "If you get a permission error when trying to remove:",
           steps: [
@@ -62,7 +62,7 @@ export const pathCSteps: StepData[] = [
           { label: "Return to this page and try again." },
         ],
         fixScreenshotSrc: "/screenshot-fix-remove-wba-partner-portfolio.png",
-        fixNote: "After removing, wait at least 3 minutes before trying again — it can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
+        fixNote: "After removing, wait at least 3 minutes before trying again. It can take up to 24 hours to clear. In most cases, waiting a few hours solves the problem.",
         subFix: {
           trigger: "If you get a permission error when trying to remove:",
           steps: [
