@@ -12,8 +12,7 @@ export const pathESteps: StepData[] = [
       { label: "Click into your WhatsApp account." },
       { label: "Find your phone number and look at its Status column." },
     ],
-    screenshotPlaceholder:
-      "Meta Business Manager — WhatsApp accounts list showing phone number with Connected status",
+    screenshotSrc: "/screenshot-bm-whatsapp-accounts.png",
     whatYouShouldSee: "Your phone number listed with a Connected or Active status.",
     tellMeMore:
       "This confirms your WABA and phone number are fully registered for Cloud API. If the status is not Connected or Active, your WABA exists but the registration is not complete. Contact Rio support before continuing.",
@@ -24,6 +23,7 @@ export const pathESteps: StepData[] = [
         title: "Another provider is connected to my number",
         description:
           "Your number is partner-locked to another WhatsApp provider. Rio cannot connect until that provider releases the number.",
+        screenshotSrc: "/screenshot-bm-waba-partner-lock.png",
         isDeadEnd: true,
         deadEndNote:
           "Go back to the start and select 'Yes, I am migrating from another provider' to follow the migration path.",

@@ -128,31 +128,35 @@ export default function TriageQuiz() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-start gap-3">
             <button
               onClick={() => goTo("/path-c")}
-              className="rounded-lg bg-rio-teal px-4 py-3 text-sm font-semibold text-white hover:opacity-90"
+              className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
             >
               Connect a WhatsApp Business App
             </button>
-          </div>
-          <div className="mt-4 flex flex-col items-center gap-2">
-            <button
-              onClick={() => goTo("/path-b")}
-              className="text-xs text-gray-400 hover:underline"
-            >
-              I&apos;ve never used this number on WhatsApp, on my phone or desktop <span className="text-gray-300">(less likely)</span>
-            </button>
-            <button
-              onClick={() => goTo("/path-e")}
-              className="text-xs text-gray-300 hover:underline"
-            >
-              I already have a WhatsApp for Business account set up inside Meta Business Suite <span className="text-gray-200">(more unlikely)</span>
-            </button>
+
+            <div className="mt-1">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Other options</p>
+              <div className="flex flex-col gap-1.5">
+                <button
+                  onClick={() => goTo("/path-b")}
+                  className="text-left text-sm text-gray-500 hover:text-rio-teal hover:underline"
+                >
+                  I&apos;ve never used this number on WhatsApp, on my phone or desktop <span className="text-gray-400">(less likely)</span>
+                </button>
+                <button
+                  onClick={() => goTo("/path-e")}
+                  className="text-left text-sm text-gray-500 hover:text-rio-teal hover:underline"
+                >
+                  I already have a WhatsApp for Business account set up inside Meta Business Suite <span className="text-gray-400">(more unlikely)</span>
+                </button>
+              </div>
+            </div>
           </div>
           <button
             onClick={goBack}
-            className="mt-4 flex items-center gap-1 text-sm text-rio-green hover:underline"
+            className="mt-5 flex items-center gap-1 text-sm text-rio-green hover:underline"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
             Back
