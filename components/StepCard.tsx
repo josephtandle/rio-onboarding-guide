@@ -211,7 +211,7 @@ export default function StepCard({
                   <button
                     key={i}
                     onClick={() => setSelectedError(i)}
-                    className="rounded-lg border border-rio-green/20 bg-rio-white px-4 py-3 text-left text-sm text-rio-black hover:border-rio-teal hover:bg-rio-mint/20"
+                    className="rounded-lg border border-rio-green/20 bg-rio-white px-4 py-3 text-left text-sm text-red-600 hover:border-rio-teal hover:bg-rio-mint/20"
                   >
                     {err.title}
                   </button>
