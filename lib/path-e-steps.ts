@@ -7,13 +7,13 @@ export const pathESteps: StepData[] = [
     title: "Check Your Phone Number Status in Meta",
     estimatedTime: "2 min",
     actions: [
-      { label: "Go to business.facebook.com", href: "https://business.facebook.com" },
-      { label: "Click the Settings gear in the bottom left, then Accounts, then WhatsApp accounts." },
-      { label: "Click into your WhatsApp account." },
-      { label: "Find your phone number and look at its Status column." },
+      { label: "Open your WhatsApp accounts in Meta Business Settings", href: "https://business.facebook.com/settings/whatsapp_account/" },
+      { label: "Click into your WhatsApp account from the list on the left." },
+      { label: "Click the Phone Numbers tab." },
+      { label: "Find your phone number and check its Status column." },
     ],
-    screenshotSrc: "/screenshot-bm-whatsapp-accounts.png",
-    whatYouShouldSee: "Your phone number listed with a Connected or Active status.",
+    screenshotSrc: "/screenshot-bm-whatsapp-phone-numbers.png",
+    whatYouShouldSee: "Your phone number listed under the Phone Numbers tab with a status shown.",
     tellMeMore:
       "This confirms your WABA and phone number are fully registered for Cloud API. If the status is not Connected or Active, your WABA exists but the registration is not complete. Contact Rio support before continuing.",
     warningCallout:
