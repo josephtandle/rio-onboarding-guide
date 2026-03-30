@@ -11,7 +11,7 @@ export const pathCSteps: StepData[] = [
     screenshotPlaceholder:
       "Select your country code from the dropdown, enter your WhatsApp Business phone number, then click Next",
     tellMeMore:
-      'If your number has not yet been added to your Business Portfolio, Meta will ask you to verify it before continuing.',
+      'You will be asked to verify this number. Make sure you have your phone ready and that it can receive OTP text messages.',
     commonErrors: [
       {
         branchId: "C1.I",

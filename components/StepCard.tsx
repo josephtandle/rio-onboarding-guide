@@ -26,7 +26,6 @@ export default function StepCard({
   totalSteps,
   screenId,
 }: StepCardProps) {
-  const [showTellMeMore, setShowTellMeMore] = useState(false);
   const [errorOpen, setErrorOpen] = useState(false);
   const [selectedError, setSelectedError] = useState<number | null>(null);
 
@@ -169,26 +168,10 @@ export default function StepCard({
         <ScreenshotPlaceholder description={step.screenshotPlaceholder} />
       ) : null}
 
-      {/* Tell me more */}
+      {/* Note */}
       {step.tellMeMore && (
-        <div className="mb-4">
-          <button
-            onClick={() => setShowTellMeMore(!showTellMeMore)}
-            className="flex items-center gap-1 text-sm font-medium text-rio-teal hover:underline"
-          >
-            <svg
-              width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-              className={`transition-transform ${showTellMeMore ? "rotate-90" : ""}`}
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-            Tell me more
-          </button>
-          {showTellMeMore && (
-            <p className="mt-2 rounded-lg bg-rio-beige p-3 text-sm text-rio-green">
-              {step.tellMeMore}
-            </p>
-          )}
+        <div className="mb-4 rounded-lg bg-rio-beige p-3 text-sm text-rio-green">
+          <strong className="mr-1">Note:</strong>{step.tellMeMore}
         </div>
       )}
 
