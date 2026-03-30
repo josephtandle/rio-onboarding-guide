@@ -136,12 +136,18 @@ export default function TriageQuiz() {
               Connect a WhatsApp Business App
             </button>
           </div>
-          <div className="mt-4 text-center">
+          <div className="mt-4 flex flex-col items-center gap-2">
             <button
               onClick={() => goTo("/path-b")}
               className="text-xs text-gray-400 hover:underline"
             >
-              I already have a WhatsApp for Business account <span className="text-gray-300">(less likely)</span>
+              I&apos;ve never used this number on WhatsApp, on my phone or desktop <span className="text-gray-300">(less likely)</span>
+            </button>
+            <button
+              onClick={() => goTo("/path-a")}
+              className="text-xs text-gray-300 hover:underline"
+            >
+              I already have a WhatsApp for Business account set up inside Meta Business Suite <span className="text-gray-200">(more unlikely)</span>
             </button>
           </div>
           <button
