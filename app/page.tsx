@@ -17,6 +17,9 @@ export default function Home() {
           <p className="mt-2 text-sm text-rio-green">
             Answer a few quick questions so we can find your fastest path to setup.
           </p>
+          <p className="mt-2 text-sm text-gray-400">
+            If you get stuck at any time, feel free to reach out under Get Help.
+          </p>
         </div>
         <TriageQuiz />
       </main>
