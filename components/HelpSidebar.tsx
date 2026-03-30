@@ -280,7 +280,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                 />
               </div>
               <button
-                onClick={handleSubmit}
+                onClick={() => handleSubmit()}
                 disabled={loading || (!query.trim() && !screenshot)}
                 className="px-4 py-2.5 rounded-lg bg-rio-teal text-white text-sm font-medium hover:opacity-90 disabled:opacity-40 transition-opacity flex items-center gap-1.5 flex-shrink-0"
               >
