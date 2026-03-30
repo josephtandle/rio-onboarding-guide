@@ -15,13 +15,9 @@ export default function Home() {
             Connect Your WhatsApp Number to Rio
           </h1>
           <p className="mt-2 text-sm text-rio-green">
-            Answer a few questions so we can show you the right steps.
+            Answer a few quick questions so we can find your fastest path to setup.
           </p>
         </div>
-
-        <p className="mb-6 text-center text-sm text-rio-green">
-          Answer a few quick questions and we&apos;ll show you exactly what to do.
-        </p>
         <TriageQuiz />
       </main>
 
