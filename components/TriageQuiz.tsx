@@ -127,11 +127,11 @@ export default function TriageQuiz() {
                 onClick={() => goTo("/path-c")}
                 className="w-full rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
               >
-                Connect a WhatsApp Business App
+                Next
               </button>
             </div>
             <div className="mt-4 border-t border-gray-100 pt-4">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Other</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Other situations</p>
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => goTo("/path-b")}
