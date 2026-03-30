@@ -203,6 +203,7 @@ function PathPageWithBranch({
                 handleToggleAction(step.id, actionIdx)
               }
               onComplete={() => handleComplete(step.id)}
+              onBack={currentIndex === 0 ? () => router.push("/") : () => setCurrentIndex((idx) => Math.max(idx - 1, 0))}
               onBranch={(action) => handleBranch(step.id, action)}
               totalSteps={steps.length}
               screenId={`D-${step.number}`}
