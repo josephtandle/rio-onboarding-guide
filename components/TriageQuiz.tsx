@@ -39,7 +39,7 @@ export default function TriageQuiz() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div className="mx-auto w-full max-w-5xl">
       {/* Progress dots */}
       <div className="mb-6 flex justify-center gap-2">
         {(["migration", "wba-type"] as Stage[]).map((s) => (
@@ -144,7 +144,7 @@ export default function TriageQuiz() {
               I&apos;ve never used this number on WhatsApp, on my phone or desktop <span className="text-gray-300">(less likely)</span>
             </button>
             <button
-              onClick={() => goTo("/path-a")}
+              onClick={() => goTo("/path-e")}
               className="text-xs text-gray-300 hover:underline"
             >
               I already have a WhatsApp for Business account set up inside Meta Business Suite <span className="text-gray-200">(more unlikely)</span>

@@ -9,7 +9,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-rio-black">
             Connect Your WhatsApp Number to Rio

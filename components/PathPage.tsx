@@ -140,7 +140,7 @@ export default function PathPage({
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
         <div className="mb-6">
           {prereqDone && (
             <button
