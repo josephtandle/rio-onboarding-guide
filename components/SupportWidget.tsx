@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SupportModal from "./SupportModal";
+import HelpSidebar from "./HelpSidebar";
 
 export default function SupportWidget() {
   const [open, setOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function SupportWidget() {
         </svg>
         Get Help
       </button>
-      <SupportModal open={open} onClose={() => setOpen(false)} />
+      <HelpSidebar open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
