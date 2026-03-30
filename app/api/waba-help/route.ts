@@ -31,7 +31,7 @@ async function sendRateLimitAlert(): Promise<void> {
 function getGemini() {
   const key = process.env.GOOGLE_AI_API_KEY;
   if (!key) throw new Error("GOOGLE_AI_API_KEY not set");
-  return new GoogleGenerativeAI(key).getGenerativeModel({ model: "gemini-1.5-flash" });
+  return new GoogleGenerativeAI(key).getGenerativeModel({ model: "gemini-2.0-flash" });
 }
 
 function isRateLimit(err: unknown): boolean {
