@@ -64,7 +64,7 @@ export const pathESteps: StepData[] = [
       { label: "Click Continue." },
     ],
     screenshotPlaceholder:
-      "Meta embedded signup — WhatsApp Business account dropdown showing an existing account selected",
+      "TODO: Screenshot needed — Meta embedded signup WhatsApp Business account dropdown showing an existing account name in the list (not the Create or Connect options). To get this: log in to Rio, click Connect WhatsApp, pick your Business Portfolio, then open the WhatsApp Business account dropdown before selecting anything.",
     tellMeMore:
       "Your existing WhatsApp Business Account should appear as an option in the dropdown. If it does not appear, it may be under a different Business Portfolio or may not be fully registered.",
     warningCallout:
