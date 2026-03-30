@@ -357,7 +357,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
 
             {/* AI Answer */}
             {answer && !loading && (
-              <div className="rounded-xl bg-white border border-rio-green/15 p-4 space-y-2 shadow-sm">
+              <div className="rounded-xl bg-white border border-rio-green/15 p-4 space-y-2 shadow-sm break-words overflow-wrap-anywhere">
                 <div className="flex items-center gap-1.5 mb-3">
                   <div className="w-2 h-2 rounded-full bg-rio-teal" />
                   <span className="text-xs font-semibold text-rio-teal uppercase tracking-wide">AI Answer</span>
