@@ -31,7 +31,7 @@ async function callOpenRouter(
       "HTTP-Referer": "https://joinrio.app",
       "X-Title": "Rio WABA Help",
     },
-    body: JSON.stringify({ model, messages, max_tokens: 600 }),
+    body: JSON.stringify({ model, messages, max_tokens: 1500 }),
   });
 
   if (!res.ok) {
@@ -141,11 +141,11 @@ Respond in this exact structure:
 **Direct Answer**: (2-3 sentences directly addressing the question)
 
 **Steps to Fix**:
-(numbered, specific, actionable steps — or "N/A" if not applicable)
+List ALL possible fixes in order from most likely to least likely. Be thorough — include every viable solution from the knowledge base. Number each step. If a step has sub-steps, include them. Do not summarize or truncate. If there is only one fix, still list it. Never write "N/A" unless there is genuinely nothing to fix.
 
-**Notes**: (1 sentence max on important caveats — omit this section if nothing critical to add)
+**Notes**: (any important caveats, warnings, or follow-up actions — omit only if truly nothing to add)
 
-Keep the total response under 300 words. Be direct and practical.`;
+Be direct and practical. Do not cut steps short.`;
 }
 
 // ── Stage label ──────────────────────────────────────────────────────────────
