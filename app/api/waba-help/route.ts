@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { searchKb, SearchResult } from "@/lib/waba-search";
 
 const OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions";
-const TEXT_MODEL = "meta-llama/llama-3.3-70b-instruct:free";
+const TEXT_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
 const VISION_MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 
 // ── Injection guard ──────────────────────────────────────────────────────────
