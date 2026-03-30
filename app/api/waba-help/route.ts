@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Resend } from "resend";
 import { searchKb, SearchResult } from "@/lib/waba-search";
+
+const OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions";
+const TEXT_MODEL = "meta-llama/llama-3.3-70b-instruct:free";
+const VISION_MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 
 // ── Injection guard ──────────────────────────────────────────────────────────
 const INJECTION_RE = /\b(ignore|system:|jailbreak|disregard|pretend|forget|override)\b/i;
@@ -14,6 +17,39 @@ function sanitize(raw: unknown): string | null {
   return s;
 }
 
+// ── OpenRouter fetch helper ───────────────────────────────────────────────────
+async function callOpenRouter(
+  model: string,
+  messages: { role: string; content: unknown }[],
+  apiKey: string
+): Promise<string> {
+  const res = await fetch(OPENROUTER_BASE, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+      "HTTP-Referer": "https://joinrio.app",
+      "X-Title": "Rio WABA Help",
+    },
+    body: JSON.stringify({ model, messages, max_tokens: 600 }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    const msg = err?.error?.message ?? `HTTP ${res.status}`;
+    throw Object.assign(new Error(msg), { status: res.status, raw: err });
+  }
+
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content ?? "";
+}
+
+function isRateLimit(err: unknown): boolean {
+  const status = (err as { status?: number })?.status;
+  const msg = err instanceof Error ? err.message : String(err);
+  return status === 429 || msg.includes("429") || msg.toLowerCase().includes("rate") || msg.toLowerCase().includes("quota");
+}
+
 // ── Rate-limit email alert ───────────────────────────────────────────────────
 async function sendRateLimitAlert(): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -22,21 +58,9 @@ async function sendRateLimitAlert(): Promise<void> {
   await resend.emails.send({
     from: "Rio Alerts <onboarding@resend.dev>",
     to: "joe@joinrio.app",
-    subject: "Rio Help Widget — Google AI rate limit hit",
-    text: "Google AI Studio has reached a request per minute timeout; consider upgrading to another model.",
+    subject: "Rio Help Widget — AI rate limit hit",
+    text: "The Rio help widget AI (OpenRouter free tier) has hit a rate limit. Consider upgrading to a paid model.",
   });
-}
-
-// ── Gemini helpers ───────────────────────────────────────────────────────────
-function getGemini() {
-  const key = process.env.GOOGLE_AI_API_KEY;
-  if (!key) throw new Error("GOOGLE_AI_API_KEY not set");
-  return new GoogleGenerativeAI(key).getGenerativeModel({ model: "gemini-2.0-flash" });
-}
-
-function isRateLimit(err: unknown): boolean {
-  const msg = err instanceof Error ? err.message : String(err);
-  return msg.includes("429") || msg.toLowerCase().includes("quota") || msg.toLowerCase().includes("rate");
 }
 
 // ── Screenshot analysis ──────────────────────────────────────────────────────
@@ -46,17 +70,24 @@ interface ScreenshotContext {
   description: string;
 }
 
-async function analyzeScreenshot(dataUrl: string): Promise<ScreenshotContext | null> {
+async function analyzeScreenshot(dataUrl: string, apiKey: string): Promise<ScreenshotContext | null> {
   const match = dataUrl.match(/^data:(image\/[a-z+]+);base64,(.+)$/);
   if (!match) return null;
-  const [, mimeType, base64Data] = match;
 
-  const model = getGemini();
-  const result = await model.generateContent([
-    {
-      inlineData: { mimeType, data: base64Data },
-    },
-    `You are analyzing a screenshot from a WhatsApp Business Account (WABA) setup flow.
+  try {
+    const text = await callOpenRouter(
+      VISION_MODEL,
+      [
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: { url: dataUrl },
+            },
+            {
+              type: "text",
+              text: `You are analyzing a screenshot from a WhatsApp Business Account (WABA) setup flow.
 Extract and return ONLY a JSON object with these fields:
 {
   "errors": ["list of error messages or UI issues visible"],
@@ -64,17 +95,22 @@ Extract and return ONLY a JSON object with these fields:
   "description": "one sentence describing what the screenshot shows"
 }
 Return ONLY valid JSON, no other text.`,
-  ]);
+            },
+          ],
+        },
+      ],
+      apiKey
+    );
 
-  try {
-    const text = result.response.text().trim().replace(/^```json\n?|\n?```$/g, "");
-    const parsed = JSON.parse(text);
+    const cleaned = text.trim().replace(/^```json\n?|\n?```$/g, "");
+    const parsed = JSON.parse(cleaned);
     return {
       errors: Array.isArray(parsed.errors) ? parsed.errors.slice(0, 5).map(String) : [],
       stage: typeof parsed.stage === "string" ? parsed.stage : null,
       description: typeof parsed.description === "string" ? parsed.description.slice(0, 400) : "",
     };
   } catch {
+    // Vision failed — proceed without screenshot context
     return null;
   }
 }
@@ -149,23 +185,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing or invalid query" }, { status: 400 });
   }
 
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ answer: null, error: "ai_error" });
+  }
+
   const screenshotRaw = typeof body.screenshot === "string" ? body.screenshot : null;
 
   try {
-    const model = getGemini();
-
     // 1. Analyze screenshot if provided
     let ctx: ScreenshotContext | null = null;
     if (screenshotRaw) {
       try {
-        ctx = await analyzeScreenshot(screenshotRaw);
+        ctx = await analyzeScreenshot(screenshotRaw, apiKey);
       } catch (err) {
         if (isRateLimit(err)) {
           sendRateLimitAlert().catch(() => {});
-          return NextResponse.json({
-            answer: null,
-            error: "rate_limit",
-          });
+          return NextResponse.json({ answer: null, error: "rate_limit" });
         }
         // Screenshot analysis failed — proceed without it
       }
@@ -186,10 +222,13 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 4. Build prompt and call Gemini
+    // 4. Build prompt and call OpenRouter
     const prompt = buildPrompt(query, results, ctx);
-    const geminiResult = await model.generateContent(prompt);
-    const answer = geminiResult.response.text().trim();
+    const answer = await callOpenRouter(
+      TEXT_MODEL,
+      [{ role: "user", content: prompt }],
+      apiKey
+    );
 
     // 5. Build sources (heading + stage only — no file paths exposed)
     const sources = results.slice(0, 5).map((r) => ({

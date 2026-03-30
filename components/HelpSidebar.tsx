@@ -245,7 +245,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
         <div className="flex items-center justify-between px-5 py-4 bg-rio-teal text-white flex-shrink-0">
           <div>
             <h2 className="font-semibold text-base">WABA Setup Help</h2>
-            <p className="text-xs text-white/70 mt-0.5">Ask anything about your WhatsApp Business setup</p>
+            <p className="text-xs text-white/70 mt-0.5">Ask anything about your WhatsApp Business or about setting up your WhatsApp Business account.</p>
           </div>
           <button
             onClick={onClose}
@@ -285,6 +285,9 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                 {loading ? <SpinnerIcon /> : "Ask"}
               </button>
             </div>
+
+            {/* Suggestion hint */}
+            <p className="text-xs text-rio-green/60">We suggest uploading an image of your error or pasting in the error that you're getting.</p>
 
             {/* Screenshot upload */}
             <div>

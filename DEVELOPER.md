@@ -58,8 +58,8 @@ print(json.dumps(records))
 
 | Variable | Purpose | Where to get it |
 |---|---|---|
-| `GOOGLE_AI_API_KEY` | Gemini 1.5 Flash (search + AI answer + vision) | Google AI Studio → project "Rio" |
-| `RESEND_API_KEY` | Email alert when Google rate limit is hit | resend.com → free account |
+| `OPENROUTER_API_KEY` | AI answers + screenshot vision (free tier) | openrouter.ai → Create Key |
+| `RESEND_API_KEY` | Email alert when rate limit is hit | resend.com → free account |
 
 Both are set in Vercel project settings. For local dev, copy to `.env.local`.
 
@@ -78,7 +78,7 @@ At current traffic volumes this should never trigger. If it does consistently, u
 - **Framework:** Next.js 16.2 (App Router)
 - **Styling:** Tailwind CSS v4 (config in `globals.css` via `@theme inline`)
 - **Language:** TypeScript
-- **AI:** Google Gemini 1.5 Flash via `@google/generative-ai`
+- **AI:** OpenRouter free tier (Llama 3.3 70b + Nemotron vision) via native `fetch`
 - **Email alerts:** Resend via `resend` package
 - **Deployment:** Vercel (auto-deploys from GitHub main branch)
 
