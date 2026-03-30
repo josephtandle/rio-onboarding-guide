@@ -6,14 +6,10 @@ export const pathCSteps: StepData[] = [
     number: 1,
     title: "Enter Your WhatsApp Business Phone Number",
     estimatedTime: "1 min",
-    actions: [
-      { label: "Select your country code from the dropdown." },
-      { label: "Enter the phone number that is currently running on WhatsApp Business App." },
-      { label: 'Click "Next".' },
-    ],
+    actions: [],
     screenshotSrc: "/screenshot-connect-wba-enter-phone.png",
     screenshotPlaceholder:
-      "Meta embedded signup — Enter your WhatsApp Business phone number form",
+      "Select your country code from the dropdown, enter your WhatsApp Business phone number, then click Next",
     tellMeMore:
       'If your number has not yet been added to your Business Portfolio, Meta will ask you to verify it before continuing.',
     commonErrors: [
