@@ -334,7 +334,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                   <img src={previewUrl} alt="Uploaded screenshot" className="w-full max-h-40 object-contain" />
                   <button
                     onClick={clearScreenshot}
-                    className="absolute top-2 right-2 p-1 rounded-full bg-white/90 shadow text-rio-black hover:bg-white"
+                    className="absolute top-2 right-2 flex items-center justify-center w-9 h-9 rounded-full bg-white/90 shadow text-rio-black hover:bg-white"
                     aria-label="Remove screenshot"
                   >
                     <CloseIcon />
@@ -354,20 +354,27 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                       handleSubmit(file);
                     }
                   }}
-                  className={`w-full flex flex-col items-center justify-center gap-1.5 py-4 px-4 rounded-lg border border-dashed text-sm cursor-pointer transition-colors ${
+                  className={`w-full flex flex-col items-center justify-center gap-1.5 py-5 px-4 rounded-lg border border-dashed text-sm cursor-pointer transition-colors ${
                     dragOver
                       ? "border-rio-teal bg-rio-mint/30 text-rio-teal"
                       : "border-rio-green/30 bg-white text-rio-green/70 hover:border-rio-teal hover:text-rio-teal"
                   }`}
                 >
                   <UploadIcon />
-                  <span>{dragOver ? "Drop to upload" : "Drag & drop a screenshot, or click to browse"}</span>
+                  <span>
+                    {dragOver
+                      ? "Drop to upload"
+                      : isTouch
+                        ? "Tap to upload a screenshot or take a photo"
+                        : "Drag & drop a screenshot, or click to browse"}
+                  </span>
                 </div>
               )}
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
+                capture={isTouch ? "environment" : undefined}
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
@@ -439,14 +446,14 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
               href="https://wa.me/16462092333"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-rio-teal px-3 py-2.5 text-sm font-medium text-white no-underline hover:opacity-90 transition-opacity"
+              className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-rio-teal px-3 py-3 text-sm font-medium text-white no-underline hover:opacity-90 transition-opacity"
             >
               <WhatsAppIcon />
               WhatsApp
             </a>
             <a
               href="mailto:support@joinrio.app"
-              className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-rio-green/20 px-3 py-2.5 text-sm font-medium text-rio-black no-underline hover:bg-rio-sand/30 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-rio-green/20 px-3 py-3 text-sm font-medium text-rio-black no-underline hover:bg-rio-sand/30 transition-colors"
             >
               Email us
             </a>
