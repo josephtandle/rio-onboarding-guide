@@ -4,11 +4,12 @@ import { searchKb, SearchResult } from "@/lib/waba-search";
 
 const OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions";
 const TEXT_MODELS = [
+  "arcee-ai/trinity-large-preview:free",
   "google/gemma-3-27b-it:free",
   "meta-llama/llama-3.3-70b-instruct:free",
   "nvidia/nemotron-3-super-120b-a12b:free",
   "nousresearch/hermes-3-llama-3.1-405b:free",
-  "meta-llama/llama-3.2-3b-instruct:free",
+  "liquid/lfm-2.5-1.2b-instruct:free",
 ];
 const VISION_MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 

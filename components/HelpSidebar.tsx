@@ -2,6 +2,14 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 
+function useIsTouchDevice() {
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+  }, []);
+  return isTouch;
+}
+
 interface Source {
   heading: string;
   stage: string;
@@ -81,8 +89,9 @@ function renderAnswer(text: string): React.ReactNode[] {
       continue;
     }
 
-    // If we hit a heading-style line (**Foo**:) after list items, flush the list first
-    if (line.match(/^\*\*[^*]+\*\*/) && listItems.length > 0) {
+    // New section heading (**Foo**:) — always flush whatever came before
+    if (line.match(/^\*\*[^*]+\*\*/)) {
+      flushPara();
       flushList();
     }
 
@@ -165,6 +174,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isTouch = useIsTouchDevice();
 
   // Esc to close
   useEffect(() => {
@@ -277,7 +287,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+            className="flex items-center justify-center w-11 h-11 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0"
             aria-label="Close help sidebar"
           >
             <CloseIcon />
@@ -301,14 +311,14 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Ask a question about your setup..."
-                  className="w-full pl-9 pr-3 py-2.5 text-sm rounded-lg border border-rio-green/20 bg-white text-rio-black placeholder:text-rio-green/50 focus:outline-none focus:ring-2 focus:ring-rio-teal focus:border-rio-teal"
+                  className="w-full pl-9 pr-3 h-11 text-sm rounded-lg border border-rio-green/20 bg-white text-rio-black placeholder:text-rio-green/50 focus:outline-none focus:ring-2 focus:ring-rio-teal focus:border-rio-teal"
                   disabled={loading}
                 />
               </div>
               <button
                 onClick={() => handleSubmit()}
                 disabled={loading || (!query.trim() && !screenshot)}
-                className="px-4 py-2.5 rounded-lg bg-rio-teal text-white text-sm font-medium hover:opacity-90 disabled:opacity-40 transition-opacity flex items-center gap-1.5 flex-shrink-0"
+                className="px-4 h-11 rounded-lg bg-rio-teal text-white text-sm font-medium hover:opacity-90 disabled:opacity-40 transition-opacity flex items-center gap-1.5 flex-shrink-0"
               >
                 {loading ? <SpinnerIcon /> : "Ask"}
               </button>
