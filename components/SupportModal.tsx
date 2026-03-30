@@ -1,16 +1,42 @@
 "use client";
 
+import { useEffect } from "react";
+
 interface SupportModalProps {
   open: boolean;
   onClose: () => void;
 }
 
 export default function SupportModal({ open, onClose }: SupportModalProps) {
+  useEffect(() => {
+    if (!open) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="mx-4 w-full max-w-sm rounded-xl bg-rio-white p-6 shadow-xl">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      onClick={onClose}
+    >
+      <div
+        className="relative mx-4 w-full max-w-sm rounded-xl bg-rio-white p-6 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+          aria-label="Close"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
         <h3 className="mb-4 text-lg font-semibold text-rio-black">
           Need help with this step?
         </h3>
@@ -34,12 +60,6 @@ export default function SupportModal({ open, onClose }: SupportModalProps) {
             <EmailIcon />
             Email support@joinrio.app
           </a>
-          <button
-            onClick={onClose}
-            className="mt-2 text-sm text-rio-green hover:underline"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
