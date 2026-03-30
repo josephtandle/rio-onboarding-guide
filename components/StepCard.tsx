@@ -12,6 +12,7 @@ interface StepCardProps {
   checkedActions: boolean[];
   onToggleAction: (actionIndex: number) => void;
   onComplete: () => void;
+  onBack: () => void;
   onBranch?: (action: string) => void;
   totalSteps: number;
   screenId?: string;
@@ -22,6 +23,7 @@ export default function StepCard({
   isActive,
   isCompleted,
   onComplete,
+  onBack,
   onBranch,
   totalSteps,
   screenId,
@@ -226,23 +228,30 @@ export default function StepCard({
 
       {/* Bottom row */}
       {!step.successState && (
-        <div className="mt-5 flex items-center justify-between gap-3">
-          {errors.length > 0 ? (
+        <div className="mt-5 space-y-3">
+          {errors.length > 0 && (
             <button
               onClick={() => { setErrorOpen(!errorOpen); setSelectedError(null); }}
-              className="rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-red-100"
+              className="text-sm text-red-600 hover:underline"
             >
               I&apos;m getting an error
             </button>
-          ) : (
-            <div />
           )}
-          <button
-            onClick={onComplete}
-            className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
-          >
-            Next step &rarr;
-          </button>
+          <div className="flex items-center justify-between gap-3">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-1 text-sm font-medium text-rio-green hover:underline"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
+              Back
+            </button>
+            <button
+              onClick={onComplete}
+              className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+            >
+              Next &rarr;
+            </button>
+          </div>
         </div>
       )}
     </div>
