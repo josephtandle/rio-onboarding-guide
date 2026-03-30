@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import type { StepData } from "@/lib/types";
-import ErrorAccordion from "./ErrorAccordion";
+import type { StepData, CommonError } from "@/lib/types";
 import ScreenshotPlaceholder from "./ScreenshotPlaceholder";
-import SupportModal from "./SupportModal";
 
 interface StepCardProps {
   step: StepData;
@@ -16,30 +14,26 @@ interface StepCardProps {
   onComplete: () => void;
   onBranch?: (action: string) => void;
   totalSteps: number;
-  screenId?: string; // e.g. "A-1", "B-3"
+  screenId?: string;
 }
 
 export default function StepCard({
   step,
   isActive,
   isCompleted,
-  checkedActions,
-  onToggleAction,
   onComplete,
   onBranch,
   totalSteps,
   screenId,
 }: StepCardProps) {
   const [showTellMeMore, setShowTellMeMore] = useState(false);
-  const [supportOpen, setSupportOpen] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [selectedError, setSelectedError] = useState<number | null>(null);
 
   const actions = step.actions ?? [];
-  const allChecked =
-    actions.length > 0 &&
-    checkedActions.length === actions.length &&
-    checkedActions.every(Boolean);
+  const errors = step.commonErrors ?? [];
 
-  // Collapsed completed card (non-clickable)
+  // Collapsed completed card
   if (isCompleted && !isActive) {
     return (
       <div className="rounded-xl border border-rio-mint bg-rio-white p-4">
@@ -58,7 +52,7 @@ export default function StepCard({
     );
   }
 
-  // Upcoming (not active, not completed)
+  // Upcoming
   if (!isActive) {
     return (
       <div className="rounded-xl border border-gray-200 bg-rio-white/60 p-4 opacity-60">
@@ -78,227 +72,305 @@ export default function StepCard({
     );
   }
 
-  // Active card — expanded
+  // Active card
   return (
-    <>
-      <div
-        id={`step-${step.number}`}
-        className="rounded-xl bg-rio-white p-5 border-2 border-rio-teal shadow-sm"
-      >
-        {/* Header */}
-        <div className="mb-4 flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white bg-rio-teal">
-              {step.number}
-            </div>
-            <div>
-              {screenId && (
-                <span className="block font-mono text-xs text-gray-400">[{screenId}]</span>
-              )}
-              <h3 className="text-base font-semibold text-rio-black">
-                Step {step.number} of {totalSteps}: {step.title}
-              </h3>
-            </div>
+    <div id={`step-${step.number}`} className="rounded-xl border-2 border-rio-teal bg-rio-white p-5 shadow-sm">
+
+      {/* Header */}
+      <div className="mb-4 flex items-start justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rio-teal text-xs font-semibold text-white">
+            {step.number}
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            {step.estimatedTime && (
-              <span className="rounded-full bg-rio-mint px-2.5 py-0.5 text-xs font-medium text-rio-teal">
-                {step.estimatedTime}
-              </span>
+          <div>
+            {screenId && (
+              <span className="block font-mono text-xs text-gray-400">[{screenId}]</span>
             )}
+            <h3 className="text-base font-semibold text-rio-black">{step.title}</h3>
           </div>
         </div>
-
-        {/* Success state (final step) */}
-        {step.successState && (
-          <div className="mb-4 rounded-lg border border-rio-mint bg-rio-mint/30 p-5 text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-rio-aqua text-white">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-            </div>
-            <h4 className="mb-2 text-lg font-semibold text-rio-black">
-              {step.successState.title}
-            </h4>
-            <ul className="mb-4 space-y-2 text-left text-sm text-rio-black">
-              {step.successState.bullets.map((b, i) => (
-                <li key={i} className="flex gap-2">
-                  <span className="mt-1 text-rio-aqua">&#8226;</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-            {step.successState.ctaHref && (
-              <a
-                href={step.successState.ctaHref}
-                className="inline-block rounded-lg bg-rio-teal px-6 py-3 text-sm font-medium text-white no-underline hover:opacity-90"
-              >
-                {step.successState.ctaLabel || "Continue"}
-              </a>
-            )}
-          </div>
+        {step.estimatedTime && (
+          <span className="shrink-0 rounded-full bg-rio-mint px-2.5 py-0.5 text-xs font-medium text-rio-teal">
+            {step.estimatedTime}
+          </span>
         )}
-
-        {/* Actions as checkboxes */}
-        {actions.length > 0 && (
-          <div className="mb-4 space-y-3">
-            {actions.map((action, i) => (
-              <label
-                key={i}
-                className="flex cursor-pointer items-start gap-3 rounded-lg p-2 hover:bg-rio-beige"
-              >
-                <input
-                  type="checkbox"
-                  checked={checkedActions[i] || false}
-                  onChange={() => onToggleAction(i)}
-                  className="mt-0.5"
-                />
-                <span className="text-sm text-rio-black">
-                  {action.href ? (
-                    <>
-                      <a
-                        href={action.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium text-rio-teal underline hover:opacity-80"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {action.label}
-                      </a>
-                    </>
-                  ) : (
-                    action.label
-                  )}
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
-
-        {/* Warning callout */}
-        {step.warningCallout && (
-          <div className="mb-4 rounded-lg bg-rio-sand p-4 text-sm text-rio-black">
-            <strong className="mr-1">Heads up:</strong>
-            {step.warningCallout}
-          </div>
-        )}
-
-        {/* Screenshot — real image or placeholder */}
-        {step.screenshotSrc ? (
-          <div className="mb-4 overflow-hidden rounded-lg border border-gray-200">
-            <Image
-              src={step.screenshotSrc}
-              alt={step.screenshotPlaceholder || "Screenshot"}
-              width={600}
-              height={400}
-              className="w-full"
-            />
-          </div>
-        ) : step.screenshotPlaceholder ? (
-          <ScreenshotPlaceholder description={step.screenshotPlaceholder} />
-        ) : null}
-
-        {/* Tell me more */}
-        {step.tellMeMore && (
-          <div className="mb-4">
-            <button
-              onClick={() => setShowTellMeMore(!showTellMeMore)}
-              className="flex items-center gap-1 text-sm font-medium text-rio-teal hover:underline"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className={`transition-transform ${showTellMeMore ? "rotate-90" : ""}`}
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-              Tell me more
-            </button>
-            {showTellMeMore && (
-              <p className="mt-2 rounded-lg bg-rio-beige p-3 text-sm text-rio-green">
-                {step.tellMeMore}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* What you should see */}
-        {step.whatYouShouldSee && !step.screenshotPlaceholder && (
-          <div className="mb-4 rounded-lg border border-rio-mint bg-rio-mint/20 p-3 text-sm text-rio-black">
-            <strong>What you should see:</strong> {step.whatYouShouldSee}
-          </div>
-        )}
-
-        {/* Branch */}
-        {step.branch && (
-          <div className="mb-4 rounded-lg border border-rio-green/20 p-4">
-            <p className="mb-3 text-sm font-medium text-rio-black">
-              {step.branch.question}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {step.branch.options.map((opt, i) => (
-                <button
-                  key={i}
-                  onClick={() => onBranch?.(opt.action)}
-                  className="rounded-lg border border-rio-teal px-4 py-2 text-sm font-medium text-rio-teal hover:bg-rio-teal hover:text-white"
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Common errors */}
-        {step.commonErrors && <ErrorAccordion errors={step.commonErrors} />}
-
-        {/* Buttons row */}
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          {!step.successState && (
-            <>
-              <button
-                onClick={onComplete}
-                disabled={!allChecked}
-                className={`rounded-lg px-5 py-2.5 text-sm font-medium ${
-                  allChecked
-                    ? "bg-rio-teal text-white hover:opacity-90"
-                    : "cursor-not-allowed bg-gray-200 text-gray-400"
-                }`}
-              >
-                Mark complete &rarr; Next step
-              </button>
-              {!allChecked && (
-                <button
-                  onClick={onComplete}
-                  className="text-sm text-rio-green hover:underline"
-                >
-                  Skip to next
-                </button>
-              )}
-            </>
-          )}
-
-          <button
-            onClick={() => setSupportOpen(true)}
-            className="ml-auto rounded-lg bg-rio-sand px-4 py-2 text-sm font-medium text-rio-black hover:opacity-90"
-          >
-            I&apos;m getting an error
-          </button>
-        </div>
       </div>
 
-      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
-    </>
+      {/* Success state */}
+      {step.successState && (
+        <div className="mb-4 rounded-lg border border-rio-mint bg-rio-mint/30 p-5 text-center">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-rio-aqua text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+          </div>
+          <h4 className="mb-2 text-lg font-semibold text-rio-black">{step.successState.title}</h4>
+          <ul className="mb-4 space-y-2 text-left text-sm text-rio-black">
+            {step.successState.bullets.map((b, i) => (
+              <li key={i} className="flex gap-2">
+                <span className="mt-1 text-rio-aqua">&#8226;</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          {step.successState.ctaHref && (
+            <a
+              href={step.successState.ctaHref}
+              className="inline-block rounded-lg bg-rio-teal px-6 py-3 text-sm font-medium text-white no-underline hover:opacity-90"
+            >
+              {step.successState.ctaLabel || "Continue"}
+            </a>
+          )}
+        </div>
+      )}
+
+      {/* Actions as numbered list */}
+      {actions.length > 0 && (
+        <ol className="mb-4 space-y-2">
+          {actions.map((action, i) => (
+            <li key={i} className="flex gap-3 text-sm text-rio-black">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-rio-teal/10 text-xs font-semibold text-rio-teal">
+                {i + 1}
+              </span>
+              {action.href ? (
+                <a
+                  href={action.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-rio-teal underline hover:opacity-80"
+                >
+                  {action.label}
+                </a>
+              ) : (
+                <span>{action.label}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {/* Warning callout */}
+      {step.warningCallout && (
+        <div className="mb-4 rounded-lg bg-rio-sand p-4 text-sm text-rio-black">
+          <strong className="mr-1">Heads up:</strong>
+          {step.warningCallout}
+        </div>
+      )}
+
+      {/* Screenshot */}
+      {step.screenshotSrc ? (
+        <div className="mb-4 overflow-hidden rounded-lg border border-gray-200">
+          <Image
+            src={step.screenshotSrc}
+            alt={step.screenshotPlaceholder || "Screenshot"}
+            width={600}
+            height={400}
+            className="w-full"
+          />
+        </div>
+      ) : step.screenshotPlaceholder ? (
+        <ScreenshotPlaceholder description={step.screenshotPlaceholder} />
+      ) : null}
+
+      {/* Tell me more */}
+      {step.tellMeMore && (
+        <div className="mb-4">
+          <button
+            onClick={() => setShowTellMeMore(!showTellMeMore)}
+            className="flex items-center gap-1 text-sm font-medium text-rio-teal hover:underline"
+          >
+            <svg
+              width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+              className={`transition-transform ${showTellMeMore ? "rotate-90" : ""}`}
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+            Tell me more
+          </button>
+          {showTellMeMore && (
+            <p className="mt-2 rounded-lg bg-rio-beige p-3 text-sm text-rio-green">
+              {step.tellMeMore}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* What you should see */}
+      {step.whatYouShouldSee && !step.screenshotPlaceholder && (
+        <div className="mb-4 rounded-lg border border-rio-mint bg-rio-mint/20 p-3 text-sm text-rio-black">
+          <strong>What you should see:</strong> {step.whatYouShouldSee}
+        </div>
+      )}
+
+      {/* Branch */}
+      {step.branch && (
+        <div className="mb-4 rounded-lg border border-rio-green/20 p-4">
+          <p className="mb-3 text-sm font-medium text-rio-black">{step.branch.question}</p>
+          <div className="flex flex-wrap gap-2">
+            {step.branch.options.map((opt, i) => (
+              <button
+                key={i}
+                onClick={() => onBranch?.(opt.action)}
+                className="rounded-lg border border-rio-teal px-4 py-2 text-sm font-medium text-rio-teal hover:bg-rio-teal hover:text-white"
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Inline error panel */}
+      {errors.length > 0 && errorOpen && (
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
+          {selectedError === null ? (
+            <>
+              <p className="mb-3 text-sm font-semibold text-red-800">Which error are you getting?</p>
+              <div className="flex flex-col gap-2">
+                {errors.map((err, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedError(i)}
+                    className="rounded-lg border border-red-200 bg-white px-4 py-3 text-left text-sm text-rio-black hover:border-red-400 hover:bg-red-50"
+                  >
+                    {err.title}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <ErrorDetail error={errors[selectedError]} onBack={() => setSelectedError(null)} />
+          )}
+        </div>
+      )}
+
+      {/* Bottom row */}
+      {!step.successState && (
+        <div className="mt-5 flex items-center justify-between gap-3">
+          {errors.length > 0 ? (
+            <button
+              onClick={() => { setErrorOpen(!errorOpen); setSelectedError(null); }}
+              className="rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-red-100"
+            >
+              I&apos;m getting an error
+            </button>
+          ) : (
+            <div />
+          )}
+          <button
+            onClick={onComplete}
+            className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+          >
+            Next step &rarr;
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void }) {
+  return (
+    <div>
+      <button
+        onClick={onBack}
+        className="mb-3 flex items-center gap-1 text-xs font-medium text-red-700 hover:underline"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        Back to error list
+      </button>
+
+      {/* Error message */}
+      <div className="mb-3">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-red-700">Error Message</p>
+        <p className="rounded-lg border border-red-200 bg-white px-3 py-2 text-sm font-medium text-rio-black">
+          {error.title}
+        </p>
+      </div>
+
+      {/* Error screenshot */}
+      {error.screenshotSrc && (
+        <div className="mb-3 overflow-hidden rounded-lg border border-red-200">
+          <Image src={error.screenshotSrc} alt={error.title} width={500} height={300} className="w-full" />
+        </div>
+      )}
+
+      {/* Context */}
+      <div className="mb-3">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-red-700">What this means</p>
+        <p className="text-sm text-rio-black">{error.description}</p>
+      </div>
+
+      {/* How to fix */}
+      {error.fixSteps && error.fixSteps.length > 0 && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-blue-800">How to Fix</p>
+          <ol className="space-y-2">
+            {error.fixSteps.map((s, i) => (
+              <li key={i} className="flex gap-2 text-sm text-blue-900">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-blue-800">
+                  {i + 1}
+                </span>
+                {s.href ? (
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80">
+                    {s.label}
+                  </a>
+                ) : (
+                  <span>{s.label}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+          {error.fixScreenshotSrc && (
+            <div className="mt-3 overflow-hidden rounded-lg border border-blue-200">
+              <Image src={error.fixScreenshotSrc} alt="Fix screenshot" width={500} height={300} className="w-full" />
+            </div>
+          )}
+          {error.fixNote && (
+            <p className="mt-3 flex gap-2 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              <span className="shrink-0">⏱</span>
+              {error.fixNote}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Sub-fix */}
+      {error.subFix && (
+        <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
+          <p className="mb-2 text-xs font-semibold text-gray-700">{error.subFix.trigger}</p>
+          <ol className="space-y-1.5">
+            {error.subFix.steps.map((s, i) => (
+              <li key={i} className="flex gap-2 text-xs text-gray-800">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-gray-200 text-xs font-bold text-gray-600">
+                  {i + 1}
+                </span>
+                {s.href ? (
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80">
+                    {s.label}
+                  </a>
+                ) : (
+                  <span>{s.label}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+          {error.subFix.screenshotSrc && (
+            <div className="mt-3 overflow-hidden rounded-lg border border-gray-200">
+              <Image src={error.subFix.screenshotSrc} alt={error.subFix.trigger} width={500} height={300} className="w-full" />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Dead-end note */}
+      {error.deadEndNote && (
+        <p className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs italic text-amber-700">
+          {error.deadEndNote}
+        </p>
+      )}
+    </div>
   );
 }
