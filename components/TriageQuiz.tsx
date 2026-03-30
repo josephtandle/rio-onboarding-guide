@@ -128,10 +128,10 @@ export default function TriageQuiz() {
             </p>
           </div>
 
-          <div className="flex flex-col items-start gap-3">
+          <div className="mx-auto flex w-full max-w-xs flex-col gap-3">
             <button
               onClick={() => goTo("/path-c")}
-              className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+              className="w-full rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
             >
               Connect a WhatsApp Business App
             </button>
@@ -185,12 +185,12 @@ function QuizCard({
       <ScreenId id={screenId} />
       <p className="mb-1 text-xs font-medium text-rio-green uppercase tracking-wide">{pageTitle}</p>
       <h3 className="mb-5 text-lg font-semibold text-rio-black">{question}</h3>
-      <div className="flex flex-col items-start gap-3">
+      <div className="mx-auto flex w-full max-w-xs flex-col gap-3">
         {options.map((opt, i) => (
           <button
             key={i}
             onClick={opt.onClick}
-            className="rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+            className="w-full rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
           >
             {opt.label}
           </button>
