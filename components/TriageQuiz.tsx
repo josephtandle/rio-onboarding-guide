@@ -71,16 +71,12 @@ export default function TriageQuiz() {
         <div className="relative rounded-xl bg-rio-white p-6 shadow-sm">
           <ScreenId id="1B" />
           <p className="mb-1 text-xs font-medium text-rio-green uppercase tracking-wide">Step 2 of 2</p>
-          <h3 className="mb-2 text-lg font-semibold text-rio-black">
-            What happens during setup
+          <h3 className="mb-4 text-lg font-semibold text-rio-black">
+            Choose Your Business Portfolio
           </h3>
-          <p className="mb-4 text-sm text-rio-black">
-            When you open Rio&apos;s setup link, you&apos;ll see a screen to select your business assets. There are two selections to make:
-          </p>
 
           {/* Business Portfolio */}
           <div className="mb-4 rounded-lg border border-gray-200 p-4">
-            <p className="mb-1 text-xs font-semibold text-rio-teal uppercase tracking-wide">1 · Business Portfolio</p>
             <p className="mb-3 text-sm text-rio-black">
               Pick an existing business portfolio or create one during the signup flow. If you have one, pick your existing portfolio; if not, you can set up a new one during the flow.
             </p>
@@ -93,7 +89,7 @@ export default function TriageQuiz() {
                   height={280}
                   className="w-full rounded-lg border border-gray-200"
                 />
-                <p className="mt-1 text-center text-xs text-gray-500">Pick existing</p>
+                <p className="mt-1 text-center text-xs text-gray-500">Option A: Pick existing</p>
               </div>
               <div>
                 <Image
@@ -103,7 +99,7 @@ export default function TriageQuiz() {
                   height={280}
                   className="w-full rounded-lg border border-gray-200"
                 />
-                <p className="mt-1 text-center text-xs text-gray-500">Create new</p>
+                <p className="mt-1 text-center text-xs text-gray-500">Option B: Create new</p>
               </div>
             </div>
           </div>
@@ -123,33 +119,31 @@ export default function TriageQuiz() {
                 className="w-full rounded-lg border border-gray-200"
               />
             </div>
-            <p className="text-sm text-rio-black">
+            <p className="mb-4 text-sm text-rio-black">
               Choose <strong>Connect a WhatsApp Business App</strong>. This is for numbers already running on WhatsApp for Business, which is the case for most people.
             </p>
-          </div>
-
-          <div className="mx-auto flex w-full max-w-xs flex-col gap-3">
-            <button
-              onClick={() => goTo("/path-c")}
-              className="w-full rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
-            >
-              Connect a WhatsApp Business App
-            </button>
-
-            <div className="mt-1">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Other options</p>
-              <div className="flex flex-col gap-1.5">
+            <div className="mx-auto flex w-full max-w-xs flex-col gap-3">
+              <button
+                onClick={() => goTo("/path-c")}
+                className="w-full rounded-lg bg-rio-teal px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+              >
+                Connect a WhatsApp Business App
+              </button>
+            </div>
+            <div className="mt-4 border-t border-gray-100 pt-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Other</p>
+              <div className="flex flex-col gap-2">
                 <button
                   onClick={() => goTo("/path-b")}
-                  className="text-left text-sm text-gray-500 hover:text-rio-teal hover:underline"
+                  className="text-left text-sm text-gray-500 underline hover:text-rio-teal"
                 >
-                  I&apos;ve never used this number on WhatsApp, on my phone or desktop <span className="text-gray-400">(less likely)</span>
+                  I&apos;ve never used this number on WhatsApp, on my phone or desktop
                 </button>
                 <button
                   onClick={() => goTo("/path-e")}
-                  className="text-left text-sm text-gray-500 hover:text-rio-teal hover:underline"
+                  className="text-left text-sm text-gray-500 underline hover:text-rio-teal"
                 >
-                  I already have a WhatsApp for Business account set up inside Meta Business Suite <span className="text-gray-400">(more unlikely)</span>
+                  I already have a WhatsApp for Business account set up inside Meta Business Suite
                 </button>
               </div>
             </div>
