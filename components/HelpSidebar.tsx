@@ -136,6 +136,7 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
   const [sources, setSources] = useState<Source[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -303,13 +304,25 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                   </button>
                 </div>
               ) : (
-                <button
+                <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-dashed border-rio-green/30 bg-white text-rio-green/70 text-sm hover:border-rio-teal hover:text-rio-teal transition-colors"
+                  onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                  onDragLeave={() => setDragOver(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setDragOver(false);
+                    const file = e.dataTransfer.files?.[0];
+                    if (file && file.type.startsWith("image/")) handleScreenshotChange(file);
+                  }}
+                  className={`w-full flex flex-col items-center justify-center gap-1.5 py-4 px-4 rounded-lg border border-dashed text-sm cursor-pointer transition-colors ${
+                    dragOver
+                      ? "border-rio-teal bg-rio-mint/30 text-rio-teal"
+                      : "border-rio-green/30 bg-white text-rio-green/70 hover:border-rio-teal hover:text-rio-teal"
+                  }`}
                 >
                   <UploadIcon />
-                  Upload a screenshot (optional)
-                </button>
+                  <span>{dragOver ? "Drop to upload" : "Drag & drop a screenshot, or click to browse"}</span>
+                </div>
               )}
               <input
                 ref={fileInputRef}
