@@ -124,14 +124,11 @@ export default function StepCard({
         </div>
       )}
 
-      {/* Actions as numbered list */}
+      {/* Actions */}
       {actions.length > 0 && (
-        <ol className="mb-4 space-y-2">
+        <ul className="mb-4 space-y-2">
           {actions.map((action, i) => (
-            <li key={i} className="flex gap-3 text-sm text-rio-black">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-rio-teal/10 text-xs font-semibold text-rio-teal">
-                {i + 1}
-              </span>
+            <li key={i} className="text-sm text-rio-black">
               {action.href ? (
                 <a
                   href={action.href}
@@ -146,7 +143,7 @@ export default function StepCard({
               )}
             </li>
           ))}
-        </ol>
+        </ul>
       )}
 
       {/* Warning callout */}
@@ -222,16 +219,16 @@ export default function StepCard({
 
       {/* Inline error panel */}
       {errors.length > 0 && errorOpen && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4">
+        <div className="mb-4 rounded-lg border border-rio-green/20 bg-rio-white p-4">
           {selectedError === null ? (
             <>
-              <p className="mb-3 text-sm font-semibold text-red-800">Which error are you getting?</p>
+              <p className="mb-3 text-sm font-semibold text-rio-black">Which error are you getting?</p>
               <div className="flex flex-col gap-2">
                 {errors.map((err, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedError(i)}
-                    className="rounded-lg border border-red-200 bg-white px-4 py-3 text-left text-sm text-rio-black hover:border-red-400 hover:bg-red-50"
+                    className="rounded-lg border border-rio-green/20 bg-rio-white px-4 py-3 text-left text-sm text-rio-black hover:border-rio-teal hover:bg-rio-mint/20"
                   >
                     {err.title}
                   </button>
@@ -274,7 +271,7 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
     <div>
       <button
         onClick={onBack}
-        className="mb-3 flex items-center gap-1 text-xs font-medium text-red-700 hover:underline"
+        className="mb-3 flex items-center gap-1 text-xs font-medium text-rio-green hover:underline"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="m15 18-6-6 6-6" />
@@ -284,8 +281,8 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
 
       {/* Error message */}
       <div className="mb-3">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-red-700">Error Message</p>
-        <p className="rounded-lg border border-red-200 bg-white px-3 py-2 text-sm font-medium text-rio-black">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">Error Message</p>
+        <p className="rounded-lg border border-rio-green/20 bg-rio-white px-3 py-2 text-sm font-medium text-rio-black">
           {error.title}
         </p>
       </div>
@@ -299,18 +296,18 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
 
       {/* Context */}
       <div className="mb-3">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-red-700">What this means</p>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">What this means</p>
         <p className="text-sm text-rio-black">{error.description}</p>
       </div>
 
       {/* How to fix */}
       {error.fixSteps && error.fixSteps.length > 0 && (
-        <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-blue-800">How to Fix</p>
+        <div className="rounded-lg border border-rio-mint bg-rio-mint/20 p-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-rio-teal">How to Fix</p>
           <ol className="space-y-2">
             {error.fixSteps.map((s, i) => (
-              <li key={i} className="flex gap-2 text-sm text-blue-900">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-blue-800">
+              <li key={i} className="flex gap-2 text-sm text-rio-black">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-rio-teal/20 text-xs font-bold text-rio-teal">
                   {i + 1}
                 </span>
                 {s.href ? (
