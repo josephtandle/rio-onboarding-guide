@@ -33,10 +33,11 @@ export default function PathPage({
   const [prereqDone, setPrereqDone] = useState(!prerequisiteNode);
   const [hiddenSteps, setHiddenSteps] = useState<string[]>([]);
 
-  // Load saved state
+  // Load saved state — only restore step index if URL has a #step-N hash
   useEffect(() => {
     const state = loadState();
-    if (state.currentStep[pathId] !== undefined) {
+    const hasHash = typeof window !== "undefined" && /step-\d+/.test(window.location.hash);
+    if (hasHash && state.currentStep[pathId] !== undefined) {
       setCurrentIndex(state.currentStep[pathId]);
     }
     if (state.completedSteps[pathId]) {
