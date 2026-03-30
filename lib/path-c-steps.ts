@@ -22,7 +22,8 @@ export const pathCSteps: StepData[] = [
         isDeadEnd: true,
         fixSteps: [
           { label: "Go to business.facebook.com", href: "https://business.facebook.com" },
-          { label: "In the left sidebar, click Accounts → WhatsApp accounts." },
+          { label: "Choose the business portfolio you'd like to work with." },
+          { label: "In the left sidebar, click Accounts, then WhatsApp Accounts." },
           { label: "Select the WhatsApp account you want to remove." },
           { label: "Click the three-dot menu (⋯) in the top right of the account panel." },
           { label: 'Choose "Remove from business portfolio".' },
@@ -51,7 +52,8 @@ export const pathCSteps: StepData[] = [
         isDeadEnd: true,
         fixSteps: [
           { label: "Go to business.facebook.com", href: "https://business.facebook.com" },
-          { label: "In the left sidebar, click Accounts → WhatsApp accounts." },
+          { label: "Choose the business portfolio you'd like to work with." },
+          { label: "In the left sidebar, click Accounts, then WhatsApp Accounts." },
           { label: "Find your WhatsApp account in the list and select it." },
           { label: "Click the three-dot menu (⋯) in the top right of the account panel." },
           { label: 'Choose "Remove from business portfolio".' },
@@ -78,20 +80,18 @@ export const pathCSteps: StepData[] = [
     number: 2,
     title: "Confirm Permissions",
     estimatedTime: "1 min",
-    actions: [
-      { label: "Review the permissions Rio is requesting." },
-      { label: 'Click "Continue" or "Allow".' },
-    ],
-    screenshotPlaceholder: "Meta embedded signup — permissions confirmation screen",
+    actions: [],
+    screenshotSrc: "/screenshot-create-waba-review-permissions.png",
+    screenshotPlaceholder: "Review the permissions Rio is requesting, then click Continue or Allow",
   },
   {
     id: "step-3",
     number: 3,
-    title: "You're Connected!",
+    title: "Your WhatsApp Business number is now connected.",
     estimatedTime: "",
     actions: [],
     successState: {
-      title: "Your WhatsApp Business number is now connected to Rio.",
+      title: "Your WhatsApp Business number is now connected.",
       bullets: [
         "Your display name is being reviewed by Meta. This can take a few minutes to a few days. Your number works while they review it.",
         "To send first messages to customers, you will need to set up message templates in Rio.",

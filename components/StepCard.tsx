@@ -215,6 +215,9 @@ export default function StepCard({
                     onClick={() => setSelectedError(i)}
                     className="rounded-lg border border-rio-green/20 bg-rio-white px-4 py-3 text-left text-sm text-red-600 hover:border-rio-teal hover:bg-rio-mint/20"
                   >
+                    {err.branchId && (
+                      <span className="mb-1 block font-mono text-xs text-gray-400">[{err.branchId}]</span>
+                    )}
                     {err.title}
                   </button>
                 ))}
@@ -258,7 +261,15 @@ export default function StepCard({
   );
 }
 
+function sid(branchId: string | undefined, letter: string) {
+  if (!branchId) return null;
+  return (
+    <span className="ml-1.5 font-mono text-xs text-gray-400 select-none">[{branchId}.{letter}]</span>
+  );
+}
+
 function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void }) {
+  const id = error.branchId;
   return (
     <div>
       <button
@@ -273,7 +284,9 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
 
       {/* Error message */}
       <div className="mb-3">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">Error Message</p>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">
+          Error Message{sid(id, "a")}
+        </p>
         <p className="rounded-lg border border-rio-green/20 bg-rio-white px-3 py-2 text-sm font-medium text-rio-black">
           {error.title}
         </p>
@@ -281,21 +294,25 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
 
       {/* Error screenshot */}
       {error.screenshotSrc && (
-        <div className="mb-3 overflow-hidden rounded-lg border border-red-200">
+        <div className="mb-3 overflow-hidden rounded-lg border border-rio-green/20">
           <Image src={error.screenshotSrc} alt={error.title} width={500} height={300} className="w-full" />
         </div>
       )}
 
       {/* Context */}
       <div className="mb-3">
-        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">What this means</p>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-rio-teal">
+          What this means{sid(id, "b")}
+        </p>
         <p className="text-sm text-rio-black">{error.description}</p>
       </div>
 
       {/* How to fix */}
       {error.fixSteps && error.fixSteps.length > 0 && (
         <div className="rounded-lg border border-rio-mint bg-rio-mint/20 p-4">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-rio-teal">How to Fix</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-rio-teal">
+            How to Fix{sid(id, "c")}
+          </p>
           <ol className="space-y-2">
             {error.fixSteps.map((s, i) => (
               <li key={i} className="flex gap-2 text-sm text-rio-black">
@@ -313,7 +330,7 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
             ))}
           </ol>
           {error.fixScreenshotSrc && (
-            <div className="mt-3 overflow-hidden rounded-lg border border-blue-200">
+            <div className="mt-3 overflow-hidden rounded-lg border border-rio-mint">
               <Image src={error.fixScreenshotSrc} alt="Fix screenshot" width={500} height={300} className="w-full" />
             </div>
           )}
@@ -329,7 +346,9 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
       {/* Sub-fix */}
       {error.subFix && (
         <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
-          <p className="mb-2 text-xs font-semibold text-gray-700">{error.subFix.trigger}</p>
+          <p className="mb-2 text-xs font-semibold text-gray-700">
+            {error.subFix.trigger}{sid(id, "d")}
+          </p>
           <ol className="space-y-1.5">
             {error.subFix.steps.map((s, i) => (
               <li key={i} className="flex gap-2 text-xs text-gray-800">
@@ -357,7 +376,7 @@ function ErrorDetail({ error, onBack }: { error: CommonError; onBack: () => void
       {/* Dead-end note */}
       {error.deadEndNote && (
         <p className="mt-3 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs italic text-amber-700">
-          {error.deadEndNote}
+          {error.deadEndNote}{sid(id, "e")}
         </p>
       )}
     </div>
