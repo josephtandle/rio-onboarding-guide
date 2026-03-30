@@ -168,9 +168,10 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [previewUrl]);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(async (fileOverride?: File) => {
     const q = query.trim();
-    if (!q && !screenshot) return;
+    const activeFile = fileOverride ?? screenshot;
+    if (!q && !activeFile) return;
     if (loading) return;
 
     setLoading(true);
@@ -181,12 +182,12 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
 
     try {
       let screenshotData: string | undefined;
-      if (screenshot) {
+      if (activeFile) {
         screenshotData = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
           reader.onerror = reject;
-          reader.readAsDataURL(screenshot);
+          reader.readAsDataURL(activeFile);
         });
       }
 
@@ -312,7 +313,10 @@ export default function HelpSidebar({ open, onClose }: HelpSidebarProps) {
                     e.preventDefault();
                     setDragOver(false);
                     const file = e.dataTransfer.files?.[0];
-                    if (file && file.type.startsWith("image/")) handleScreenshotChange(file);
+                    if (file && file.type.startsWith("image/")) {
+                      handleScreenshotChange(file);
+                      handleSubmit(file);
+                    }
                   }}
                   className={`w-full flex flex-col items-center justify-center gap-1.5 py-4 px-4 rounded-lg border border-dashed text-sm cursor-pointer transition-colors ${
                     dragOver
