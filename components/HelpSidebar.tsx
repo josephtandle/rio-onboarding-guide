@@ -14,56 +14,82 @@ interface HelpSidebarProps {
 }
 
 // ── Simple markdown renderer ─────────────────────────────────────────────────
-// Handles **bold**, numbered lists, and line breaks from Gemini's output format
+
+function renderInline(str: string): React.ReactNode[] {
+  // Split on URLs and **bold** markers
+  const parts = str.split(/(https?:\/\/[^\s)>\]"]+|\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} className="font-semibold text-rio-teal">{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith("http")) {
+      return (
+        <a key={i} href={part} target="_blank" rel="noopener noreferrer"
+          className="text-rio-teal underline break-all">
+          {part}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
 
 function renderAnswer(text: string): React.ReactNode[] {
   const lines = text.split("\n");
   const nodes: React.ReactNode[] = [];
   let listItems: string[] = [];
+  let paraLines: string[] = [];
+
+  function flushPara() {
+    if (paraLines.length === 0) return;
+    const joined = paraLines.join(" ").trim();
+    if (joined) {
+      nodes.push(
+        <p key={`p-${nodes.length}`} className="text-sm leading-relaxed text-rio-black">
+          {renderInline(joined)}
+        </p>
+      );
+    }
+    paraLines = [];
+  }
 
   function flushList() {
     if (listItems.length === 0) return;
     nodes.push(
-      <ol key={`list-${nodes.length}`} className="list-decimal list-inside space-y-1 my-2 text-rio-black">
+      <ol key={`list-${nodes.length}`} className="list-decimal list-outside ml-4 space-y-2 my-1 text-rio-black">
         {listItems.map((item, i) => (
-          <li key={i} className="text-sm leading-relaxed">{renderInline(item)}</li>
+          <li key={i} className="text-sm leading-relaxed pl-1">{renderInline(item)}</li>
         ))}
       </ol>
     );
     listItems = [];
   }
 
-  function renderInline(str: string): React.ReactNode {
-    const parts = str.split(/(\*\*[^*]+\*\*)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith("**") && part.endsWith("**")) {
-        return <strong key={i} className="font-semibold text-rio-teal">{part.slice(2, -2)}</strong>;
-      }
-      return part;
-    });
-  }
-
-  for (const line of lines) {
+  for (const raw of lines) {
+    const line = raw.trimEnd();
     const numbered = line.match(/^(\d+)\.\s+(.+)$/);
+
     if (numbered) {
+      flushPara();
       listItems.push(numbered[2]);
       continue;
     }
-    flushList();
 
     if (line.trim() === "") {
-      nodes.push(<div key={`br-${nodes.length}`} className="h-1" />);
+      flushPara();
+      flushList();
       continue;
     }
 
-    // Headings like "**Direct Answer**:" become bold paragraph starters
-    nodes.push(
-      <p key={`p-${nodes.length}`} className="text-sm leading-relaxed text-rio-black">
-        {renderInline(line)}
-      </p>
-    );
+    // If we hit a heading-style line (**Foo**:) after list items, flush the list first
+    if (line.match(/^\*\*[^*]+\*\*/) && listItems.length > 0) {
+      flushList();
+    }
+
+    paraLines.push(line);
   }
 
+  flushPara();
   flushList();
   return nodes;
 }
