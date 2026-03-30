@@ -3,7 +3,13 @@ import { Resend } from "resend";
 import { searchKb, SearchResult } from "@/lib/waba-search";
 
 const OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions";
-const TEXT_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
+const TEXT_MODELS = [
+  "google/gemma-3-27b-it:free",
+  "meta-llama/llama-3.3-70b-instruct:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "nousresearch/hermes-3-llama-3.1-405b:free",
+  "meta-llama/llama-3.2-3b-instruct:free",
+];
 const VISION_MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 
 // ── Injection guard ──────────────────────────────────────────────────────────
@@ -222,13 +228,21 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 4. Build prompt and call OpenRouter
+    // 4. Build prompt and call OpenRouter (try models in order until one succeeds)
     const prompt = buildPrompt(query, results, ctx);
-    const answer = await callOpenRouter(
-      TEXT_MODEL,
-      [{ role: "user", content: prompt }],
-      apiKey
-    );
+    let answer = "";
+    let lastErr: unknown;
+    for (const model of TEXT_MODELS) {
+      try {
+        answer = await callOpenRouter(model, [{ role: "user", content: prompt }], apiKey);
+        if (answer) break;
+      } catch (err) {
+        lastErr = err;
+        if (isRateLimit(err)) continue; // try next model
+        throw err; // non-rate-limit error — surface it
+      }
+    }
+    if (!answer) throw lastErr;
 
     // 5. Build sources (heading + stage only — no file paths exposed)
     const sources = results.slice(0, 5).map((r) => ({
